@@ -33,7 +33,7 @@ export function Newsletter() {
   }
 
   return (
-    <section className="py-16 rounded-2xl bg-gradient-to-br from-purple-600/10 to-pink-600/10 border border-border/40 backdrop-blur-sm">
+    <section className="pb-16 rounded-2xl bg-gradient-to-br from-purple-600/10 to-pink-600/10 border border-border/40 backdrop-blur-sm">
       <div className="max-w-3xl mx-auto px-4">
         <div className="text-center mb-8">
           <div className="flex justify-center mb-4">

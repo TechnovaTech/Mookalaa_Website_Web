@@ -51,14 +51,16 @@ export default function Home() {
       </section>
 
       {/* Categories */}
-      <section className="px-4 sm:px-6 lg:px-8 py-12 max-w-7xl mx-auto space-y-12">
+      <section className="px-4 sm:px-6 lg:px-8 pb-12 max-w-7xl mx-auto space-y-4">
         {categories.slice(0, 3).map((category) => (
           <CategorySection key={category} category={category} events={mockEvents} />
         ))}
+        <CategorySection category="Indian idol contestants" events={mockEvents} />
+        <CategorySection category="Indian idol Artist" events={mockEvents} />
       </section>
 
       {/* Trending Cities */}
-      <section className="px-4 sm:px-6 lg:px-8 py-12 max-w-7xl mx-auto">
+      <section className="px-4 sm:px-6 lg:px-8 pb-12 max-w-7xl mx-auto">
         <TrendingCities cities={trendingCities} />
       </section>
 
@@ -68,7 +70,7 @@ export default function Home() {
       </section>
 
       {/* Footer */}
-      <footer className="border-t border-border/40 py-12 px-4 sm:px-6 lg:px-8 mt-12">
+      <footer className="border-t border-border/40 pb-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-8">
             <div>
@@ -127,11 +129,6 @@ export default function Home() {
                 <li>
                   <a href="mailto:sponsors@mookalaa.com" className="hover:text-foreground transition">
                     sponsors@mookalaa.com
-                  </a>
-                </li>
-                <li>
-                  <a href="mailto:artists@mookalaa.com" className="hover:text-foreground transition">
-                    artists@mookalaa.com
                   </a>
                 </li>
               </ul>
