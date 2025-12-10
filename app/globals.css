@@ -1,6 +1,14 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+/* Mobile viewport fix */
+@viewport {
+  width: device-width;
+  initial-scale: 1;
+  maximum-scale: 1;
+  user-scalable: no;
+}
+
 @custom-variant dark (&:is(.dark *));
 
 :root {
@@ -135,5 +143,65 @@
 
   * {
     @apply transition-colors duration-200;
+  }
+
+  /* Mobile-specific utilities */
+  .safe-area-pb {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  .safe-area-pt {
+    padding-top: env(safe-area-inset-top);
+  }
+
+  /* Prevent horizontal scroll on mobile */
+  body {
+    overflow-x: hidden;
+  }
+
+  /* Better touch targets for mobile */
+  @media (max-width: 640px) {
+    button, a, input, select {
+      min-height: 44px;
+    }
+    
+    /* Improve tap highlighting */
+    button, a {
+      -webkit-tap-highlight-color: rgba(255, 165, 0, 0.2);
+      tap-highlight-color: rgba(255, 165, 0, 0.2);
+    }
+  }
+
+  /* Smooth scrolling for mobile */
+  @media (max-width: 768px) {
+    html {
+      -webkit-overflow-scrolling: touch;
+    }
+    
+    /* Prevent zoom on input focus */
+    input, select, textarea {
+      font-size: 16px;
+    }
+  }
+
+  /* Active states for better mobile feedback */
+  .active\:scale-95:active {
+    transform: scale(0.95);
+  }
+
+  /* Custom scrollbar for mobile */
+  @media (max-width: 768px) {
+    ::-webkit-scrollbar {
+      width: 4px;
+    }
+    
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    
+    ::-webkit-scrollbar-thumb {
+      background: rgba(255, 165, 0, 0.3);
+      border-radius: 2px;
+    }
   }
 }

@@ -15,6 +15,12 @@ export const metadata: Metadata = {
   description:
     "Unite Through Arts. Discover amazing Jatra, Cinema, Music, Dance, Festivals, Workshops, and Custom Orders from artists worldwide.",
   generator: "v0.app",
+  viewport: {
+    width: "device-width",
+    initialScale: 1,
+    maximumScale: 1,
+    userScalable: false,
+  },
   icons: {
     icon: [
       {
@@ -32,6 +38,11 @@ export const metadata: Metadata = {
     ],
     apple: "/apple-icon.png",
   },
+  other: {
+    "mobile-web-app-capable": "yes",
+    "apple-mobile-web-app-capable": "yes",
+    "apple-mobile-web-app-status-bar-style": "default",
+  },
 }
 
 export default function RootLayout({
@@ -41,6 +52,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+        <meta name="mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+      </head>
       <body className={`font-sans antialiased bg-background text-foreground`} suppressHydrationWarning>
         <LanguageProvider>
           <Header />
