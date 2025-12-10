@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button"
 import { Calendar, MapPin, Users, Heart } from "lucide-react"
 import Link from "next/link"
 import { useState, useRef, useEffect } from "react"
+import { useRouter } from "next/navigation"
 import { formatDate } from "@/lib/utils-events"
 import { useLanguage } from "@/lib/language-context"
 
@@ -17,6 +18,7 @@ interface EventCardProps {
 
 export function EventCard({ event, variant = "grid" }: EventCardProps) {
   const { t, translateCategory, translateEvent, translateLocation } = useLanguage()
+  const router = useRouter()
   const [isLiked, setIsLiked] = useState(false)
   const [isHovered, setIsHovered] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
@@ -157,15 +159,18 @@ export function EventCard({ event, variant = "grid" }: EventCardProps) {
               className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
             />
           )}
-          <button
-            onClick={(e) => {
-              e.preventDefault()
-              setIsLiked(!isLiked)
-            }}
-            className="absolute top-2 right-2 p-2 bg-white/90 rounded-full hover:bg-white transition-colors"
-          >
-            <Heart size={18} fill={isLiked ? "currentColor" : "none"} color={isLiked ? "#ef4444" : "#666"} />
-          </button>
+          <div className="absolute top-2 right-2 flex gap-2">
+            <button
+              onClick={(e) => {
+                e.preventDefault()
+                e.stopPropagation()
+                setIsLiked(!isLiked)
+              }}
+              className="p-2 bg-white/90 rounded-full hover:bg-white transition-colors"
+            >
+              <Heart size={18} fill={isLiked ? "currentColor" : "none"} color={isLiked ? "#ef4444" : "#666"} />
+            </button>
+          </div>
         </div>
         <div className="p-4 flex-1 flex flex-col">
           <Badge variant="outline" className="w-fit rounded-md text-xs mb-2" suppressHydrationWarning>

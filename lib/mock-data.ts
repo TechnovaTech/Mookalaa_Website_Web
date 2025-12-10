@@ -1,6 +1,22 @@
 import type { Event, EventCity, Organizer } from "./types"
 
-export const categories = ["Jatra", "Cinema", "Ollywood", "Jollywood", "Music", "Influencer", "Comedian", "Sports", "YouTuber's", "Dancer", "Authors", "Poet", "Indian idol contestants", "Indian idol Artist", "Theatre Artists", "Instrumentalist", "Magician", "RJ"]
+export const categories = ["Jatra", "Cinema", "Ollywood", "Jollywood", "Music", "Influencer", "Comedian", "Sports", "YouTuber's", "Dancer", "Authors", "Poet", "Theatre Artists", "Instrumentalist", "Magician", "RJ"]
+
+export const featuredArtist = {
+  name: "Sunny Hindustani",
+  title: "Indian Idol Star",
+  description: "A rising star from Indian Idol with exceptional vocal range and stage presence. Known for his versatile singing style and ability to connect with audiences through his performances.",
+  image: "/placeholder-user.jpg",
+  rating: 4.9,
+  followers: "125K",
+  performances: [
+    "/indian-classical-music-masterclass.jpg",
+    "/concert-stage-lights-event.jpg",
+    "/bollywood-singer-recording-studio.jpg",
+    "/sitar-recital-classical-music.jpg",
+    "/global-arts-summit-networking.jpg"
+  ]
+}
 
 export const trendingCities: EventCity[] = [
   {
@@ -152,7 +168,7 @@ export const mockEvents: Event[] = [
   },
   {
     id: "4",
-    title: "Indie Cinema Showcase 2025",
+    title: "India Cinema Showcase 2025",
     description:
       "Discover independent films from emerging filmmakers across India and the world. Q&A sessions with directors.",
     image: "/film-festival-cinema-screening.jpg",
@@ -862,7 +878,7 @@ export const mockEvents: Event[] = [
     id: "39",
     title: "Contemporary Dance Performance",
     description: "Experience stunning contemporary dance performances by professional dancers.",
-    image: "/odissi-dance-festival-performance-stage.jpg",
+    image: "https://artsequator.s3.ap-southeast-1.amazonaws.com/2022/03/Chowk_PallaviinTime_Esplanade.jpg",
     date: new Date("2025-06-25"),
     time: "07:00 PM",
     location: "Dance Theatre, Mumbai, Maharashtra",
@@ -972,25 +988,7 @@ export const mockEvents: Event[] = [
     tags: ["Literature", "Festival", "Authors"],
     rating: 4.8,
   },
-  {
-    id: "45",
-    title: "Poetry Slam Competition",
-    description: "Watch poets compete in this exciting poetry slam with live performances.",
-    image: "https://6amcity.brightspotcdn.com/dims4/default/88d530e/2147483647/strip/true/crop/5088x2865+0+0/resize/1000x563!/quality/90/?url=https%3A%2F%2Fk1-prod-sixam-city.s3.us-east-2.amazonaws.com%2Fbrightspot%2Fa2%2F4d%2F61488d6d4851a9ab1c2fe0620ed3%2F5f0dff5b-48b0-4138-8365-fdba75006da7-0-2photo-submission-simsshot73.jpg",
-    date: new Date("2025-07-25"),
-    time: "07:00 PM",
-    location: "Art Cafe, Mumbai, Maharashtra",
-    city: "Mumbai",
-    coordinates: { lat: 19.076, lng: 72.8877 },
-    category: "Poet",
-    price: 100,
-    isFree: false,
-    isOnline: false,
-    organizer: organizers[0],
-    attendees: 250,
-    tags: ["Poetry", "Slam", "Competition"],
-    rating: 4.6,
-  },
+
   {
     id: "46",
     title: "Open Mic Poetry Night",
@@ -1109,7 +1107,7 @@ export const mockEvents: Event[] = [
     id: "52",
     title: "Street Theatre Festival",
     description: "Watch engaging street theatre performances addressing social issues.",
-    image: "/jatra-traditional-theatre-performance.jpg",
+    image: "https://artculturefestival.in/wp-content/uploads/2025/06/image.jpeg",
     date: new Date("2025-09-01"),
     time: "06:00 PM",
     location: "City Square, Delhi, India",

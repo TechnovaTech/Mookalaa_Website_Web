@@ -50,13 +50,17 @@ export default function Home() {
         <FeaturedSlider events={featuredEvents} />
       </section>
 
+      {/* Indian Idol Contestants Section */}
+      <section className="px-4 sm:px-6 lg:px-8 pb-12 max-w-7xl mx-auto">
+        <CategorySection category="Indian idol contestants" events={mockEvents} />
+      </section>
+
       {/* Categories */}
       <section className="px-4 sm:px-6 lg:px-8 pb-12 max-w-7xl mx-auto space-y-4">
         {categories.slice(0, 3).map((category) => (
           <CategorySection key={category} category={category} events={mockEvents} />
         ))}
-        <CategorySection category="Indian idol contestants" events={mockEvents} />
-        <CategorySection category="Indian idol Artist" events={mockEvents} />
+
       </section>
 
       {/* Trending Cities */}
