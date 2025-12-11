@@ -1,6 +1,6 @@
 "use client"
 
-import { mockEvents } from "@/lib/mock-data"
+import { mockEvents, getTranslatedEvents } from "@/lib/mock-data"
 import { EventCard } from "@/components/event-card"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
@@ -18,7 +18,8 @@ interface EventDetailProps {
 export default function EventDetailPage({ params }: EventDetailProps) {
   const { t, translateCategory, translateEvent, translateOrganizer, language } = useLanguage()
   const { id } = use(params)
-  const event = mockEvents.find((e) => e.id === id)
+  const translatedEvents = getTranslatedEvents(language)
+  const event = translatedEvents.find((e) => e.id === id)
   const [isLiked, setIsLiked] = useState(false)
 
 
@@ -38,7 +39,7 @@ export default function EventDetailPage({ params }: EventDetailProps) {
     )
   }
 
-  const relatedEvents = getRelatedEvents(event, mockEvents)
+  const relatedEvents = getRelatedEvents(event, translatedEvents)
 
   return (
     <main className="min-h-screen py-8">

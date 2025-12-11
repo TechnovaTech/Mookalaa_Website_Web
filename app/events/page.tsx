@@ -4,7 +4,7 @@ import { useState, useMemo } from "react"
 import { useSearchParams } from "next/navigation"
 import { EventFilters } from "@/components/event-filters"
 import { EventGrid } from "@/components/event-grid"
-import { mockEvents } from "@/lib/mock-data"
+import { mockEvents, getTranslatedEvents } from "@/lib/mock-data"
 import { filterEvents, sortEvents } from "@/lib/utils-events"
 import type { FilterOptions } from "@/lib/types"
 import { Button } from "@/components/ui/button"
@@ -12,7 +12,7 @@ import { LayoutGrid, Map } from "lucide-react"
 import { useLanguage } from "@/lib/language-context"
 
 export default function EventsPage() {
-  const { t } = useLanguage()
+  const { t, language } = useLanguage()
   const searchParams = useSearchParams()
   const [mapView, setMapView] = useState(false)
   const [sortBy, setSortBy] = useState<"popular" | "date" | "recent">("popular")
@@ -28,11 +28,12 @@ export default function EventsPage() {
 
   const filteredAndSorted = useMemo(() => {
     const excludedCategories = ["Festivals", "Dance", "Workshops", "Custom Orders"]
-    const eventsToFilter = mockEvents.filter(event => !excludedCategories.includes(event.category))
+    const translatedEvents = getTranslatedEvents(language)
+    const eventsToFilter = translatedEvents.filter(event => !excludedCategories.includes(event.category))
     const filtered = filterEvents(eventsToFilter, filters)
     const sorted = sortEvents(filtered, sortBy)
     return sorted.slice(0, displayCount)
-  }, [filters, sortBy, displayCount])
+  }, [filters, sortBy, displayCount, language])
 
   const handleClearFilters = () => {
     setFilters({
@@ -47,7 +48,8 @@ export default function EventsPage() {
   }
 
   const excludedCategories = ["Festivals", "Dance", "Workshops", "Custom Orders"]
-  const totalFilteredEvents = mockEvents.filter(event => !excludedCategories.includes(event.category)).filter(event => filterEvents([event], filters).length > 0).length
+  const translatedEventsForCount = getTranslatedEvents(language)
+  const totalFilteredEvents = translatedEventsForCount.filter(event => !excludedCategories.includes(event.category)).filter(event => filterEvents([event], filters).length > 0).length
 
   return (
     <main className="min-h-screen py-8">

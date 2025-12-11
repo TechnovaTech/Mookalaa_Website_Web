@@ -1,4 +1,5 @@
 import type { Event, EventCity, Organizer } from "./types"
+import { translateEventTime, translateEventLocation, translateEventTags } from "./event-translations"
 
 export const categories = ["Jatra", "Cinema", "Ollywood", "Jollywood", "Music", "Influencer", "Comedian", "Sports", "YouTuber's", "Dancer", "Authors", "Poet", "Theatre Artists", "Instrumentalist", "Magician", "RJ"]
 
@@ -800,12 +801,12 @@ export const mockEvents: Event[] = [
   },
   {
     id: "35",
-    title: "Football Tournament",
-    description: "Inter-city football tournament featuring top local teams.",
+    title: "ফুটবল টুর্নামেন্ট",
+    description: "শীর্ষ স্থানীয় দলগুলির সাথে আন্তঃশহর ফুটবল টুর্নামেন্ট।",
     image: "https://media.gettyimages.com/id/474914003/photo/soccer-player-jumping-with-ball.jpg?s=612x612&w=0&k=20&c=7TGCj3xbKLSiZG0_MiUccqch8HrNrFu_wNApD9FUK78=",
     date: new Date("2025-06-05"),
-    time: "04:00 PM",
-    location: "Football Ground, Kolkata, West Bengal",
+    time: "বিকাল ৪:০০টা",
+    location: "ফুটবল গ্রাউন্ড, কলকাতা, পশ্চিমবঙ্গ",
     city: "Kolkata",
     coordinates: { lat: 22.5726, lng: 88.3639 },
     category: "Sports",
@@ -814,7 +815,7 @@ export const mockEvents: Event[] = [
     isOnline: false,
     organizer: organizers[1],
     attendees: 2200,
-    tags: ["Sports", "Football", "Tournament"],
+    tags: ["খেলাধুলা", "ফুটবল", "টুর্নামেন্ট"],
     rating: 4.6,
   },
   {
@@ -1370,3 +1371,15 @@ export const mockEvents: Event[] = [
     rating: 4.9,
   },
 ]
+
+// Function to get translated events based on language
+export function getTranslatedEvents(language: string = 'en'): Event[] {
+  if (language !== 'bn') return mockEvents
+  
+  return mockEvents.map(event => ({
+    ...event,
+    time: translateEventTime(event.time, language),
+    location: translateEventLocation(event.location, language),
+    tags: translateEventTags(event.tags, language)
+  }))
+}

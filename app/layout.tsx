@@ -6,6 +6,7 @@ import "./globals.css"
 
 import { Header } from "@/components/header"
 import { LanguageProvider } from "@/lib/language-context"
+import GoogleTranslate from "@/components/GoogleTranslate"
 
 const _geist = Geist({ subsets: ["latin"] })
 const _geistMono = Geist_Mono({ subsets: ["latin"] })
@@ -53,6 +54,7 @@ export default function RootLayout({
         <LanguageProvider>
           <Header />
           {children}
+          <GoogleTranslate />
           <Analytics />
         </LanguageProvider>
       </body>

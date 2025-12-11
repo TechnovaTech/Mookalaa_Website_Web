@@ -5,13 +5,14 @@ import { FeaturedSlider } from "@/components/featured-slider"
 import { CategorySection } from "@/components/category-section"
 import { TrendingCities } from "@/components/trending-cities"
 import { Newsletter } from "@/components/newsletter"
-import { mockEvents, trendingCities, categories } from "@/lib/mock-data"
+import { mockEvents, getTranslatedEvents, trendingCities, categories } from "@/lib/mock-data"
 import { useLanguage } from "@/lib/language-context"
 
 export default function Home() {
-  const { t } = useLanguage()
+  const { t, language } = useLanguage()
   const excludedCategories = ["Festivals", "Dance", "Workshops", "Custom Orders"]
-  const featuredEvents = mockEvents.filter((e) => e.featured && !excludedCategories.includes(e.category))
+  const translatedEvents = getTranslatedEvents(language)
+  const featuredEvents = translatedEvents.filter((e) => e.featured && !excludedCategories.includes(e.category))
 
   return (
     <main className="min-h-screen">
@@ -52,13 +53,13 @@ export default function Home() {
 
       {/* Indian Idol Contestants Section */}
       <section className="px-4 sm:px-6 lg:px-8 pb-12 max-w-7xl mx-auto">
-        <CategorySection category="Indian idol contestants" events={mockEvents} />
+        <CategorySection category="Indian idol contestants" events={translatedEvents} />
       </section>
 
       {/* Categories */}
       <section className="px-4 sm:px-6 lg:px-8 pb-12 max-w-7xl mx-auto space-y-4">
         {categories.slice(0, 3).map((category) => (
-          <CategorySection key={category} category={category} events={mockEvents} />
+          <CategorySection key={category} category={category} events={translatedEvents} />
         ))}
 
       </section>
