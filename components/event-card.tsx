@@ -111,7 +111,7 @@ export function EventCard({ event, variant = "grid" }: EventCardProps) {
               </div>
             </div>
             <div className="mt-4 flex items-center justify-between">
-              <span className="font-bold text-lg">{event.isFree ? t("card.free") : `$${event.price}`}</span>
+              <span className="font-bold text-lg">{event.isFree ? t("card.free") : `₹${event.price}`}</span>
               {event.rating && <span className="text-sm text-yellow-500">★ {event.rating.toFixed(1)}</span>}
             </div>
           </div>
@@ -190,7 +190,7 @@ export function EventCard({ event, variant = "grid" }: EventCardProps) {
             </div>
           </div>
           <div className="flex items-center justify-between pt-3 border-t border-border">
-            <span className="font-bold text-sm">{event.isFree ? t("card.free") : `$${event.price}`}</span>
+            <span className="font-bold text-sm">{event.isFree ? t("card.free") : `₹${event.price}`}</span>
             <Button size="sm" variant="ghost" className="h-7 text-xs">
               {t("card.view")}
             </Button>

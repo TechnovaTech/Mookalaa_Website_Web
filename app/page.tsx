@@ -76,7 +76,7 @@ export default function Home() {
       {/* Footer */}
       <footer className="border-t border-border/40 pb-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-8">
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-8 mb-8">
             <div>
               <h3 className="font-bold mb-4">{t("footer.discover")}</h3>
               <ul className="space-y-2 text-sm text-muted-foreground">
@@ -153,6 +153,16 @@ export default function Home() {
                 <li>
                   <a href="#" className="hover:text-foreground transition">
                     {t("footer.refund")}
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="font-bold mb-4">Contact</h3>
+              <ul className="space-y-2 text-sm text-muted-foreground">
+                <li>
+                  <a href="tel:9583023002" className="hover:text-foreground transition">
+                    +91 9583023002
                   </a>
                 </li>
               </ul>
