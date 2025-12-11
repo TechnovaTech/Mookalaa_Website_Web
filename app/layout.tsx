@@ -11,10 +11,9 @@ const _geist = Geist({ subsets: ["latin"] })
 const _geistMono = Geist_Mono({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "MOOKALAA - Discover Arts & Cultural Events",
+  title: "Mookalaa Website",
   description:
     "Unite Through Arts. Discover amazing Jatra, Cinema, Music, Dance, Festivals, Workshops, and Custom Orders from artists worldwide.",
-  generator: "v0.app",
   viewport: {
     width: "device-width",
     initialScale: 1,
@@ -23,20 +22,10 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
-      {
-        url: "/icon-light-32x32.png",
-        media: "(prefers-color-scheme: light)",
-      },
-      {
-        url: "/icon-dark-32x32.png",
-        media: "(prefers-color-scheme: dark)",
-      },
-      {
-        url: "/icon.svg",
-        type: "image/svg+xml",
-      },
+      { url: "/mookalaa-logo.png", sizes: "32x32", type: "image/png" },
+      { url: "/favicon.ico", sizes: "16x16", type: "image/x-icon" }
     ],
-    apple: "/apple-icon.png",
+    apple: "/mookalaa-logo.png",
   },
   other: {
     "mobile-web-app-capable": "yes",
@@ -57,6 +46,8 @@ export default function RootLayout({
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <link rel="icon" type="image/png" href="/mookalaa-logo.png" />
       </head>
       <body className={`font-sans antialiased bg-background text-foreground`} suppressHydrationWarning>
         <LanguageProvider>
