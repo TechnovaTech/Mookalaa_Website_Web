@@ -69,7 +69,7 @@ const GoogleTranslate = () => {
   }, [])
 
   return (
-    <div className="fixed top-2 left-2 sm:top-4 sm:left-4 z-50 rounded-lg shadow-lg p-1 sm:p-2 max-w-[120px] sm:max-w-[180px]" style={{backgroundColor: '#124972'}}>
+    <div className="fixed top-2 right-2 z-50 rounded-lg shadow-lg p-1 max-w-[100px] xs:max-w-[120px] sm:max-w-[150px] md:max-w-[180px] lg:max-w-[200px]" style={{backgroundColor: '#124972'}}>
       <div id="google_translate_element"></div>
       <style jsx global>{`
         .goog-te-gadget {
@@ -78,12 +78,32 @@ const GoogleTranslate = () => {
         .goog-te-gadget-simple {
           background-color: transparent !important;
           border: none !important;
-          font-size: 12px !important;
+          font-size: 10px !important;
           width: 100% !important;
+        }
+        @media (min-width: 375px) {
+          .goog-te-gadget-simple {
+            font-size: 11px !important;
+          }
+        }
+        @media (min-width: 480px) {
+          .goog-te-gadget-simple {
+            font-size: 12px !important;
+          }
         }
         @media (min-width: 640px) {
           .goog-te-gadget-simple {
+            font-size: 13px !important;
+          }
+        }
+        @media (min-width: 768px) {
+          .goog-te-gadget-simple {
             font-size: 14px !important;
+          }
+        }
+        @media (min-width: 1024px) {
+          .goog-te-gadget-simple {
+            font-size: 15px !important;
           }
         }
         .goog-te-gadget-simple .goog-te-menu-value {
@@ -96,15 +116,41 @@ const GoogleTranslate = () => {
           display: none !important;
         }
         .goog-te-menu-frame {
-          max-height: 300px !important;
+          max-height: 250px !important;
           overflow-y: auto !important;
           width: auto !important;
-          min-width: 120px !important;
+          min-width: 100px !important;
+          right: 0 !important;
+          left: auto !important;
+        }
+        @media (min-width: 375px) {
+          .goog-te-menu-frame {
+            max-height: 280px !important;
+            min-width: 120px !important;
+          }
+        }
+        @media (min-width: 480px) {
+          .goog-te-menu-frame {
+            max-height: 300px !important;
+            min-width: 140px !important;
+          }
         }
         @media (min-width: 640px) {
           .goog-te-menu-frame {
+            max-height: 350px !important;
+            min-width: 160px !important;
+          }
+        }
+        @media (min-width: 768px) {
+          .goog-te-menu-frame {
             max-height: 400px !important;
             min-width: 180px !important;
+          }
+        }
+        @media (min-width: 1024px) {
+          .goog-te-menu-frame {
+            max-height: 450px !important;
+            min-width: 200px !important;
           }
         }
         body {
@@ -186,29 +232,79 @@ const GoogleTranslate = () => {
           display: none !important;
         }
         .goog-te-menu2 {
-          max-height: 300px !important;
+          max-height: 250px !important;
           overflow-y: auto !important;
           border: 1px solid #ccc !important;
           border-radius: 4px !important;
           width: auto !important;
-          min-width: 120px !important;
+          min-width: 100px !important;
+          right: 0 !important;
+          left: auto !important;
+        }
+        @media (min-width: 375px) {
+          .goog-te-menu2 {
+            max-height: 280px !important;
+            min-width: 120px !important;
+          }
+        }
+        @media (min-width: 480px) {
+          .goog-te-menu2 {
+            max-height: 300px !important;
+            min-width: 140px !important;
+          }
         }
         @media (min-width: 640px) {
+          .goog-te-menu2 {
+            max-height: 350px !important;
+            min-width: 160px !important;
+          }
+        }
+        @media (min-width: 768px) {
           .goog-te-menu2 {
             max-height: 400px !important;
             min-width: 180px !important;
           }
         }
+        @media (min-width: 1024px) {
+          .goog-te-menu2 {
+            max-height: 450px !important;
+            min-width: 200px !important;
+          }
+        }
         .goog-te-menu2-item {
-          padding: 6px 8px !important;
-          font-size: 12px !important;
+          padding: 4px 6px !important;
+          font-size: 10px !important;
           color: #333 !important;
           display: block !important;
         }
+        @media (min-width: 375px) {
+          .goog-te-menu2-item {
+            padding: 5px 7px !important;
+            font-size: 11px !important;
+          }
+        }
+        @media (min-width: 480px) {
+          .goog-te-menu2-item {
+            padding: 6px 8px !important;
+            font-size: 12px !important;
+          }
+        }
         @media (min-width: 640px) {
+          .goog-te-menu2-item {
+            padding: 7px 10px !important;
+            font-size: 13px !important;
+          }
+        }
+        @media (min-width: 768px) {
           .goog-te-menu2-item {
             padding: 8px 12px !important;
             font-size: 14px !important;
+          }
+        }
+        @media (min-width: 1024px) {
+          .goog-te-menu2-item {
+            padding: 9px 14px !important;
+            font-size: 15px !important;
           }
         }
         .goog-te-menu2-item:hover {
@@ -218,21 +314,49 @@ const GoogleTranslate = () => {
           background-color: #e3f2fd !important;
         }
         .goog-te-combo {
-          padding: 4px 6px !important;
+          padding: 3px 4px !important;
           border: 1px solid #ccc !important;
           border-radius: 4px !important;
           background: #124972 !important;
           color: white !important;
-          font-size: 12px !important;
-          min-width: 100px !important;
+          font-size: 10px !important;
+          min-width: 80px !important;
           width: 100% !important;
           box-sizing: border-box !important;
         }
+        @media (min-width: 375px) {
+          .goog-te-combo {
+            padding: 4px 5px !important;
+            font-size: 11px !important;
+            min-width: 100px !important;
+          }
+        }
+        @media (min-width: 480px) {
+          .goog-te-combo {
+            padding: 5px 6px !important;
+            font-size: 12px !important;
+            min-width: 120px !important;
+          }
+        }
         @media (min-width: 640px) {
+          .goog-te-combo {
+            padding: 6px 8px !important;
+            font-size: 13px !important;
+            min-width: 140px !important;
+          }
+        }
+        @media (min-width: 768px) {
           .goog-te-combo {
             padding: 8px 12px !important;
             font-size: 14px !important;
             min-width: 150px !important;
+          }
+        }
+        @media (min-width: 1024px) {
+          .goog-te-combo {
+            padding: 10px 14px !important;
+            font-size: 15px !important;
+            min-width: 180px !important;
           }
         }
         .goog-te-gadget-simple a {
@@ -245,8 +369,13 @@ const GoogleTranslate = () => {
           display: none !important;
         }
         .goog-te-gadget-simple .goog-te-menu-value:before {
-          content: 'Language' !important;
+          content: 'Lang' !important;
           color: white !important;
+        }
+        @media (min-width: 480px) {
+          .goog-te-gadget-simple .goog-te-menu-value:before {
+            content: 'Language' !important;
+          }
         }
       `}</style>
     </div>

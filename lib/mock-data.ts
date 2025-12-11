@@ -69,7 +69,7 @@ const organizers: Organizer[] = [
   {
     id: "1",
     name: "Odissi Classical Arts",
-    image: "/odissi-arts-collective-logo.jpg",
+    image: "/bharatanatyam-dance-workshop.jpg",
     verified: true,
     events: 42,
     followers: 5200,
