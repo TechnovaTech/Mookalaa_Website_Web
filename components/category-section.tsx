@@ -20,8 +20,8 @@ export function CategorySection({ category, events }: CategorySectionProps) {
 
   return (
     <section className="py-12">
-      <div className="flex items-center justify-between mb-8">
-        <div>
+      <div className="flex items-center justify-between mb-8" suppressHydrationWarning>
+        <div suppressHydrationWarning>
           <h2 className="text-3xl font-bold mb-2">{translateCategory(category)}</h2>
           <p className="text-muted-foreground">{t("category.discover")} {translateCategory(category).toLowerCase()} {t("category.eventsNow")}</p>
         </div>
@@ -31,7 +31,7 @@ export function CategorySection({ category, events }: CategorySectionProps) {
           </Link>
         </Button>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" suppressHydrationWarning>
         {categoryEvents.map((event) => (
           <EventCard key={event.id} event={event} />
         ))}

@@ -34,10 +34,10 @@ export function Newsletter() {
 
   return (
     <section className="pb-16 rounded-2xl bg-gradient-to-br from-purple-600/10 to-pink-600/10 border border-border/40 backdrop-blur-sm">
-      <div className="max-w-3xl mx-auto px-4">
-        <div className="text-center mb-8">
-          <div className="flex justify-center mb-4">
-            <div className="w-12 h-12 bg-gradient-to-br from-purple-600 to-pink-600 rounded-lg flex items-center justify-center">
+      <div className="max-w-3xl mx-auto px-4" suppressHydrationWarning>
+        <div className="text-center mb-8" suppressHydrationWarning>
+          <div className="flex justify-center mb-4" suppressHydrationWarning>
+            <div className="w-12 h-12 bg-gradient-to-br from-purple-600 to-pink-600 rounded-lg flex items-center justify-center" suppressHydrationWarning>
               <MessageSquare size={24} className="text-white" />
             </div>
           </div>
@@ -57,8 +57,8 @@ export function Newsletter() {
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="relative">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4" suppressHydrationWarning>
+              <div className="relative" suppressHydrationWarning>
                 <User size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
                 <input
                   type="text"
@@ -70,7 +70,7 @@ export function Newsletter() {
                   className="w-full pl-10 pr-4 py-3 bg-background rounded-lg border border-border focus:outline-none focus:ring-2 focus:ring-primary/20 transition"
                 />
               </div>
-              <div className="relative">
+              <div className="relative" suppressHydrationWarning>
                 <User size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
                 <input
                   type="text"
@@ -83,8 +83,8 @@ export function Newsletter() {
                 />
               </div>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="relative">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4" suppressHydrationWarning>
+              <div className="relative" suppressHydrationWarning>
                 <Phone size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
                 <input
                   type="tel"
@@ -96,7 +96,7 @@ export function Newsletter() {
                   className="w-full pl-10 pr-4 py-3 bg-background rounded-lg border border-border focus:outline-none focus:ring-2 focus:ring-primary/20 transition"
                 />
               </div>
-              <div className="relative">
+              <div className="relative" suppressHydrationWarning>
                 <Mail size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
                 <input
                   type="email"
@@ -109,7 +109,7 @@ export function Newsletter() {
                 />
               </div>
             </div>
-            <div className="relative">
+            <div className="relative" suppressHydrationWarning>
               <MessageSquare size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
               <input
                 type="text"
@@ -121,7 +121,7 @@ export function Newsletter() {
                 className="w-full pl-10 pr-4 py-3 bg-background rounded-lg border border-border focus:outline-none focus:ring-2 focus:ring-primary/20 transition"
               />
             </div>
-            <div>
+            <div suppressHydrationWarning>
               <textarea
                 name="message"
                 placeholder={t("inquiry.messagePlaceholder")}

@@ -135,12 +135,12 @@ export function Header() {
           </form>
 
           {/* Google Translate */}
-          <div className="hidden lg:block">
-            <div id="google_translate_element"></div>
+          <div className="hidden lg:block" suppressHydrationWarning>
+            <div id="google_translate_element" suppressHydrationWarning></div>
           </div>
 
           {/* Right Actions */}
-          <div className="flex items-center gap-2 sm:gap-3">
+          <div className="flex items-center gap-2 sm:gap-3" suppressHydrationWarning>
 
             
             {/* Explore Button */}

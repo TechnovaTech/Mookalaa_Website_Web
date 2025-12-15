@@ -43,14 +43,14 @@ export function EventGrid({ events, hasMore, onLoadMore, isLoading }: EventGridP
 
   return (
     <>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" suppressHydrationWarning>
         {events.map((event) => (
           <EventCard key={event.id} event={event} />
         ))}
       </div>
 
       {/* Infinite scroll trigger */}
-      <div ref={observerTarget} className="col-span-full py-8 text-center">
+      <div ref={observerTarget} className="col-span-full py-8 text-center" suppressHydrationWarning>
         {isLoading && <p className="text-muted-foreground">{t("grid.loading")}</p>}
       </div>
     </>

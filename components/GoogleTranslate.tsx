@@ -69,8 +69,8 @@ const GoogleTranslate = () => {
   }, [])
 
   return (
-    <div className="fixed top-4 right-4 z-50 rounded-lg shadow-lg p-2" style={{backgroundColor: '#124972'}}>
-      <div id="google_translate_element"></div>
+    <div className="fixed top-4 right-4 z-50 rounded-lg shadow-lg p-2" style={{backgroundColor: '#124972'}} suppressHydrationWarning>
+      <div id="google_translate_element" suppressHydrationWarning></div>
       <style jsx global>{`
         /* Hide Google Translate banner */
         .goog-te-banner-frame {

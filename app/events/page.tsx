@@ -52,17 +52,17 @@ export default function EventsPage() {
   const totalFilteredEvents = translatedEventsForCount.filter(event => !excludedCategories.includes(event.category)).filter(event => filterEvents([event], filters).length > 0).length
 
   return (
-    <main className="min-h-screen py-8">
-      <div className="px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+    <main className="min-h-screen py-8" suppressHydrationWarning>
+      <div className="px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto" suppressHydrationWarning>
         {/* Header */}
-        <div className="mb-8">
+        <div className="mb-8" suppressHydrationWarning>
           <h1 className="text-4xl font-bold mb-2" suppressHydrationWarning>{t("eventsPage.title")}</h1>
           <p className="text-muted-foreground" suppressHydrationWarning>{t("eventsPage.found")} {filteredAndSorted.length} {t("eventsPage.events")}</p>
         </div>
 
         {/* Controls */}
-        <div className="flex flex-col md:flex-row gap-4 mb-8 items-center justify-between">
-          <div className="flex gap-2">
+        <div className="flex flex-col md:flex-row gap-4 mb-8 items-center justify-between" suppressHydrationWarning>
+          <div className="flex gap-2" suppressHydrationWarning>
             <Button
               variant={!mapView ? "default" : "outline"}
               onClick={() => setMapView(false)}
@@ -83,7 +83,7 @@ export default function EventsPage() {
             </Button>
           </div>
 
-          <div className="flex gap-2">
+          <div className="flex gap-2" suppressHydrationWarning>
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value as any)}
@@ -97,14 +97,14 @@ export default function EventsPage() {
         </div>
 
         {/* Content */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8" suppressHydrationWarning>
           {/* Sidebar Filters */}
-          <div className="md:col-span-1">
+          <div className="md:col-span-1" suppressHydrationWarning>
             <EventFilters filters={filters} onFiltersChange={setFilters} onClear={handleClearFilters} />
           </div>
 
           {/* Main Content */}
-          <div className="md:col-span-3">
+          <div className="md:col-span-3" suppressHydrationWarning>
             {mapView ? (
               <div className="bg-muted rounded-lg h-96 flex items-center justify-center">
                 <p className="text-muted-foreground">Map view coming soon</p>

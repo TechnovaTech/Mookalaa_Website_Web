@@ -30,19 +30,19 @@ export function EventFilters({ filters, onFiltersChange, onClear }: EventFilters
       </Button>
 
       {/* Filter Panel */}
-      <Card className={`p-6 rounded-lg ${isOpen ? "block" : "hidden md:block"}`}>
-        <div className="flex items-center justify-between mb-6">
+      <Card className={`p-6 rounded-lg ${isOpen ? "block" : "hidden md:block"}`} suppressHydrationWarning>
+        <div className="flex items-center justify-between mb-6" suppressHydrationWarning>
           <h3 className="font-bold text-lg">{t("filters.title")}</h3>
           <Button variant="ghost" size="sm" onClick={onClear} className="text-xs">
             {t("filters.clearAll")}
           </Button>
         </div>
 
-        <div className="space-y-6">
+        <div className="space-y-6" suppressHydrationWarning>
           {/* Category Filter */}
-          <div>
+          <div suppressHydrationWarning>
             <h4 className="font-semibold text-sm mb-3">{t("filters.category")}</h4>
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-2" suppressHydrationWarning>
               {categories.map((cat) => (
                 <Badge
                   key={cat}
@@ -58,7 +58,7 @@ export function EventFilters({ filters, onFiltersChange, onClear }: EventFilters
           </div>
 
           {/* Location Filter */}
-          <div>
+          <div suppressHydrationWarning>
             <label className="font-semibold text-sm mb-3 block">{t("filters.location")}</label>
             <input
               type="text"
@@ -70,10 +70,10 @@ export function EventFilters({ filters, onFiltersChange, onClear }: EventFilters
           </div>
 
           {/* Price Range */}
-          <div>
+          <div suppressHydrationWarning>
             <label className="font-semibold text-sm mb-3 block">{t("filters.priceRange")}</label>
-            <div className="flex gap-3 items-center">
-              <div className="flex-1">
+            <div className="flex gap-3 items-center" suppressHydrationWarning>
+              <div className="flex-1" suppressHydrationWarning>
                 <input
                   type="number"
                   placeholder={t("filters.min")}
@@ -85,7 +85,7 @@ export function EventFilters({ filters, onFiltersChange, onClear }: EventFilters
                 />
               </div>
               <span className="text-muted-foreground">-</span>
-              <div className="flex-1">
+              <div className="flex-1" suppressHydrationWarning>
                 <input
                   type="number"
                   placeholder={t("filters.max")}
@@ -100,9 +100,9 @@ export function EventFilters({ filters, onFiltersChange, onClear }: EventFilters
           </div>
 
           {/* Event Type */}
-          <div>
+          <div suppressHydrationWarning>
             <h4 className="font-semibold text-sm mb-3">{t("filters.eventType")}</h4>
-            <div className="space-y-2">
+            <div className="space-y-2" suppressHydrationWarning>
               {[
                 { value: "all", label: t("filters.allTypes") },
                 { value: "corporate", label: t("filters.corporate") },
