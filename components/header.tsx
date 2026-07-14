@@ -124,7 +124,7 @@ export function Header() {
   return (
     <>
     <header className="sticky top-0 z-50 backdrop-blur-lg border-b border-[#124972]/40" style={{backgroundColor: '#124972'}}>
-      <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-8">
+      <div className="w-full px-3 sm:px-4 lg:px-8">
         <div className="flex items-center justify-between gap-3 h-16 sm:h-20">
           {/* Left: Logo + Search */}
           <div className="flex items-center flex-1 min-w-0 gap-4 lg:gap-6">
