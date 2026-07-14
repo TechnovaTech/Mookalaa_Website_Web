@@ -123,7 +123,7 @@ export function Header() {
 
   return (
     <>
-    <header className="sticky top-0 z-50 backdrop-blur-lg border-b border-[#124972]/40" style={{backgroundColor: '#124972'}}>
+    <header className="sticky top-0 z-50 backdrop-blur-lg border-b border-gray-200 bg-white">
       <div className="w-full px-3 sm:px-4 lg:px-8">
         <div className="flex items-center justify-between gap-3 h-16 sm:h-20">
           {/* Left: Logo + Search */}
@@ -141,10 +141,10 @@ export function Header() {
                   placeholder="Search arts & events..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full px-4 py-2 bg-muted rounded-lg border border-border focus:outline-none focus:ring-2 focus:ring-accent/20 transition text-sm"
+                  className="w-full px-4 py-2 bg-gray-100 rounded-lg border border-gray-300 text-gray-900 placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-accent/30 transition text-sm"
                 />
                 <button type="submit" className="absolute right-3 top-1/2 -translate-y-1/2">
-                  <Search size={18} className="text-muted-foreground" />
+                  <Search size={18} className="text-gray-500" />
                 </button>
               </div>
             </form>
@@ -161,7 +161,7 @@ export function Header() {
             <Button
               size="sm"
               variant="outline"
-              className="hidden sm:inline-flex rounded-lg border-white/40 bg-transparent text-white hover:bg-white/10 hover:text-white text-xs sm:text-sm px-4 sm:px-5"
+              className="hidden sm:inline-flex rounded-lg border-[#124972]/40 bg-transparent text-[#124972] hover:bg-[#124972]/5 hover:text-[#124972] text-xs sm:text-sm px-4 sm:px-5"
             >
               Art & Culture
             </Button>
@@ -213,10 +213,10 @@ export function Header() {
         }
         .goog-te-combo {
           padding: 12px 12px 8px 12px !important;
-          border: 1px solid #ccc !important;
+          border: 1px solid #d1d5db !important;
           border-radius: 4px !important;
-          background: #124972 !important;
-          color: white !important;
+          background: white !important;
+          color: #124972 !important;
           font-size: 14px !important;
           min-width: 150px !important;
         }
