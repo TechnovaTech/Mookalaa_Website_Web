@@ -130,7 +130,7 @@ export function Header() {
           <div className="flex items-center flex-1 min-w-0 gap-4 lg:gap-6">
             {/* Logo */}
             <Link href="/" className="flex items-center gap-2 font-bold text-xl hover:opacity-80 transition flex-shrink-0">
-              <img src="/mookalaa-logo-2.png" alt="MOOKALAA - Unite through Arts" className="h-10 sm:h-12 w-auto" />
+              <img src="/mookalaa-logo-2.png" alt="MOOKALAA - Unite through Arts" className="h-12 sm:h-16 w-auto" />
             </Link>
 
             {/* Search Bar - Hidden on mobile */}
@@ -151,7 +151,7 @@ export function Header() {
           </div>
 
           {/* Right Actions */}
-          <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0" suppressHydrationWarning>
+          <div className="flex items-center gap-3 sm:gap-4 flex-shrink-0" suppressHydrationWarning>
             {/* Google Translate */}
             <div className="hidden lg:flex items-center" suppressHydrationWarning>
               <div id="google_translate_element" suppressHydrationWarning></div>
@@ -161,13 +161,13 @@ export function Header() {
             <Button
               size="sm"
               variant="outline"
-              className="hidden sm:inline-flex rounded-lg border-white/40 bg-transparent text-white hover:bg-white/10 hover:text-white text-xs sm:text-sm px-3 sm:px-4"
+              className="hidden sm:inline-flex rounded-lg border-white/40 bg-transparent text-white hover:bg-white/10 hover:text-white text-xs sm:text-sm px-4 sm:px-5"
             >
               Art & Culture
             </Button>
 
             {/* Explore Button */}
-            <Button asChild size="sm" className="rounded-lg bg-accent hover:bg-accent/90 text-xs sm:text-sm px-3 sm:px-4">
+            <Button asChild size="sm" className="rounded-lg bg-accent hover:bg-accent/90 text-xs sm:text-sm px-4 sm:px-5">
               <Link href="/events">{t("explore")}</Link>
             </Button>
 
@@ -175,7 +175,7 @@ export function Header() {
             <Button
               size="sm"
               onClick={() => setIsDownloadOpen(true)}
-              className="rounded-lg bg-gradient-to-r from-orange-400 to-amber-500 hover:from-orange-500 hover:to-amber-600 text-white text-xs sm:text-sm px-3 sm:px-4"
+              className="rounded-lg bg-gradient-to-r from-orange-400 to-amber-500 hover:from-orange-500 hover:to-amber-600 text-white text-xs sm:text-sm px-4 sm:px-5"
             >
               <Download className="h-4 w-4" />
               <span className="hidden sm:inline">Download App</span>
