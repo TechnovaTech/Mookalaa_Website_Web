@@ -22,7 +22,7 @@ export function ArtistProfile({ artist }: ArtistProfileProps) {
   const [selectedImage, setSelectedImage] = useState(0)
 
   return (
-    <section className="px-4 sm:px-6 lg:px-8 py-12 max-w-7xl mx-auto">
+    <section className="px-4 sm:px-6 lg:px-8 py-12 w-full">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
         {/* Artist Info */}
         <div className="space-y-6">

@@ -29,7 +29,7 @@ export default function EventDetailPage({ params }: EventDetailProps) {
   if (!event) {
     return (
       <main className="min-h-screen py-12">
-        <div className="max-w-7xl mx-auto text-center">
+        <div className="w-full text-center">
           <h1 className="text-2xl font-bold mb-4">{t("eventDetail.notFound")}</h1>
           <Button asChild>
             <Link href="/events">{t("eventDetail.backToEvents")}</Link>
@@ -43,7 +43,7 @@ export default function EventDetailPage({ params }: EventDetailProps) {
 
   return (
     <main className="min-h-screen py-8">
-      <div className="px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+      <div className="px-4 sm:px-6 lg:px-8 w-full">
         {/* Show only Artist section for events 49 and 50 */}
         {(id === "49" || id === "50") ? (
           <div className="max-w-4xl mx-auto">
