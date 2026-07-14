@@ -191,6 +191,11 @@ export function Header() {
           line-height: 0 !important;
           color: transparent !important;
         }
+        .goog-te-gadget > span,
+        .goog-te-gadget a,
+        .goog-te-gadget .goog-logo-link {
+          display: none !important;
+        }
         #google_translate_element {
           display: flex !important;
           align-items: center !important;
