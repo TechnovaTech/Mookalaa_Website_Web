@@ -5,10 +5,21 @@ import type React from "react"
 import { useState } from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
-import { Search, Menu, X } from "lucide-react"
+import { Search, Menu, X, Download, Smartphone } from "lucide-react"
 import { useEffect } from "react"
 import { Button } from "@/components/ui/button"
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog"
 import { useLanguage } from "@/lib/language-context"
+
+// APK download links — replace "#" with the real APK file URLs when ready
+const MOOKALAA_APP_APK_URL = "#"
+const MOOKALAA_ARTIST_APP_APK_URL = "#"
 
 declare global {
   interface Window {
@@ -21,6 +32,7 @@ export function Header() {
   const [searchQuery, setSearchQuery] = useState("")
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [isSearchOpen, setIsSearchOpen] = useState(false)
+  const [isDownloadOpen, setIsDownloadOpen] = useState(false)
   const { language, setLanguage, t } = useLanguage()
   const router = useRouter()
 
@@ -110,42 +122,64 @@ export function Header() {
   }
 
   return (
+    <>
     <header className="sticky top-0 z-50 backdrop-blur-lg border-b border-[#124972]/40" style={{backgroundColor: '#124972'}}>
       <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-8">
-        <div className="flex items-center justify-between h-16 sm:h-20">
-          {/* Logo */}
-          <Link href="/" className="flex items-center gap-2 font-bold text-xl hover:opacity-80 transition flex-shrink-0">
-            <img src="/mookalaa-logo-2.png" alt="MOOKALAA - Unite through Arts" className="h-8 sm:h-10 w-auto" />
-          </Link>
+        <div className="flex items-center justify-between gap-3 h-16 sm:h-20">
+          {/* Left: Logo + Search */}
+          <div className="flex items-center flex-1 min-w-0 gap-4 lg:gap-6">
+            {/* Logo */}
+            <Link href="/" className="flex items-center gap-2 font-bold text-xl hover:opacity-80 transition flex-shrink-0">
+              <img src="/mookalaa-logo-2.png" alt="MOOKALAA - Unite through Arts" className="h-10 sm:h-12 w-auto" />
+            </Link>
 
-          {/* Search Bar - Hidden on mobile */}
-          <form onSubmit={handleSearch} className="hidden lg:flex flex-1 max-w-md mx-4 xl:mx-8">
-            <div className="relative w-full">
-              <input
-                type="text"
-                placeholder="Search arts & events..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full px-4 py-2 bg-muted rounded-lg border border-border focus:outline-none focus:ring-2 focus:ring-accent/20 transition text-sm"
-              />
-              <button type="submit" className="absolute right-3 top-1/2 -translate-y-1/2">
-                <Search size={18} className="text-muted-foreground" />
-              </button>
-            </div>
-          </form>
-
-          {/* Google Translate */}
-          <div className="hidden lg:block" suppressHydrationWarning>
-            <div id="google_translate_element" suppressHydrationWarning></div>
+            {/* Search Bar - Hidden on mobile */}
+            <form onSubmit={handleSearch} className="hidden lg:flex flex-1 max-w-2xl">
+              <div className="relative w-full">
+                <input
+                  type="text"
+                  placeholder="Search arts & events..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="w-full px-4 py-2 bg-muted rounded-lg border border-border focus:outline-none focus:ring-2 focus:ring-accent/20 transition text-sm"
+                />
+                <button type="submit" className="absolute right-3 top-1/2 -translate-y-1/2">
+                  <Search size={18} className="text-muted-foreground" />
+                </button>
+              </div>
+            </form>
           </div>
 
           {/* Right Actions */}
-          <div className="flex items-center gap-2 sm:gap-3" suppressHydrationWarning>
+          <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0" suppressHydrationWarning>
+            {/* Google Translate */}
+            <div className="hidden lg:flex items-center" suppressHydrationWarning>
+              <div id="google_translate_element" suppressHydrationWarning></div>
+            </div>
 
-            
+            {/* Art & Culture Button */}
+            <Button
+              size="sm"
+              variant="outline"
+              className="hidden sm:inline-flex rounded-lg border-white/40 bg-transparent text-white hover:bg-white/10 hover:text-white text-xs sm:text-sm px-3 sm:px-4"
+            >
+              Art & Culture
+            </Button>
+
             {/* Explore Button */}
             <Button asChild size="sm" className="rounded-lg bg-accent hover:bg-accent/90 text-xs sm:text-sm px-3 sm:px-4">
               <Link href="/events">{t("explore")}</Link>
+            </Button>
+
+            {/* Download App Button */}
+            <Button
+              size="sm"
+              onClick={() => setIsDownloadOpen(true)}
+              className="rounded-lg bg-gradient-to-r from-orange-400 to-amber-500 hover:from-orange-500 hover:to-amber-600 text-white text-xs sm:text-sm px-3 sm:px-4"
+            >
+              <Download className="h-4 w-4" />
+              <span className="hidden sm:inline">Download App</span>
+              <span className="sm:hidden">App</span>
             </Button>
           </div>
         </div>
@@ -153,6 +187,13 @@ export function Header() {
       <style jsx global>{`
         .goog-te-gadget {
           font-family: inherit !important;
+          font-size: 0 !important;
+          line-height: 0 !important;
+          color: transparent !important;
+        }
+        #google_translate_element {
+          display: flex !important;
+          align-items: center !important;
         }
         .goog-te-gadget-simple {
           background-color: transparent !important;
@@ -191,5 +232,46 @@ export function Header() {
         }
       `}</style>
     </header>
+
+    {/* Download App Popup */}
+    <Dialog open={isDownloadOpen} onOpenChange={setIsDownloadOpen}>
+      <DialogContent className="sm:max-w-lg">
+        <DialogHeader>
+          <DialogTitle>Download Mookalaa App</DialogTitle>
+          <DialogDescription>
+            Get the Mookalaa apps on your Android device.
+          </DialogDescription>
+        </DialogHeader>
+        <div className="grid gap-4 sm:grid-cols-2">
+          <div className="rounded-lg border border-border p-4 flex flex-col items-center text-center gap-3">
+            <Smartphone className="h-8 w-8 text-accent" />
+            <div>
+              <p className="font-semibold">Mookalaa App</p>
+              <p className="text-xs text-muted-foreground">Discover & book arts and cultural events</p>
+            </div>
+            <Button asChild size="sm" className="w-full rounded-lg bg-accent hover:bg-accent/90 mt-auto">
+              <a href={MOOKALAA_APP_APK_URL} onClick={(e) => MOOKALAA_APP_APK_URL === "#" && e.preventDefault()}>
+                <Download className="h-4 w-4" />
+                Download APK
+              </a>
+            </Button>
+          </div>
+          <div className="rounded-lg border border-border p-4 flex flex-col items-center text-center gap-3">
+            <Smartphone className="h-8 w-8 text-accent" />
+            <div>
+              <p className="font-semibold">Mookalaa Artist App</p>
+              <p className="text-xs text-muted-foreground">For artists — manage your profile & bookings</p>
+            </div>
+            <Button asChild size="sm" className="w-full rounded-lg bg-accent hover:bg-accent/90 mt-auto">
+              <a href={MOOKALAA_ARTIST_APP_APK_URL} onClick={(e) => MOOKALAA_ARTIST_APP_APK_URL === "#" && e.preventDefault()}>
+                <Download className="h-4 w-4" />
+                Download APK
+              </a>
+            </Button>
+          </div>
+        </div>
+      </DialogContent>
+    </Dialog>
+    </>
   )
 }
