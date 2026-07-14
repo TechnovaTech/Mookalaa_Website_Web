@@ -17,12 +17,12 @@ export default function Home() {
   return (
     <main className="min-h-screen">
       {/* Hero Section */}
-      <section className="px-4 sm:px-6 lg:px-8 pt-8 pb-12 w-full">
+      <section className="px-4 sm:px-6 lg:px-8 pt-8 pb-12 max-w-7xl mx-auto">
         <HeroSearch />
       </section>
 
       {/* MOOKALAA Stats Section */}
-      <section className="px-4 sm:px-6 lg:px-8 py-12 w-full">
+      <section className="px-4 sm:px-6 lg:px-8 py-12 max-w-7xl mx-auto">
         <div className="grid grid-cols-2 md:grid-cols-5 gap-4 md:gap-6">
           {[
             { label: t("stats.eventsBooked"), value: "150+" },
@@ -43,7 +43,7 @@ export default function Home() {
       </section>
 
       {/* Featured Events Slider */}
-      <section className="px-4 sm:px-6 lg:px-8 py-12 w-full">
+      <section className="px-4 sm:px-6 lg:px-8 py-12 max-w-7xl mx-auto">
         <div className="mb-8">
           <h2 className="text-3xl font-bold mb-2">{t("featured.title")}</h2>
           <p className="text-muted-foreground">{t("featured.subtitle")}</p>
@@ -52,12 +52,12 @@ export default function Home() {
       </section>
 
       {/* Indian Idol Contestants Section */}
-      <section className="px-4 sm:px-6 lg:px-8 pb-12 w-full">
+      <section className="px-4 sm:px-6 lg:px-8 pb-12 max-w-7xl mx-auto">
         <CategorySection category="Indian idol contestants" events={translatedEvents} />
       </section>
 
       {/* Categories */}
-      <section className="px-4 sm:px-6 lg:px-8 pb-12 w-full space-y-4">
+      <section className="px-4 sm:px-6 lg:px-8 pb-12 max-w-7xl mx-auto space-y-4">
         {categories.slice(0, 3).map((category) => (
           <CategorySection key={category} category={category} events={translatedEvents} />
         ))}
@@ -65,18 +65,18 @@ export default function Home() {
       </section>
 
       {/* Trending Cities */}
-      <section className="px-4 sm:px-6 lg:px-8 pb-12 w-full">
+      <section className="px-4 sm:px-6 lg:px-8 pb-12 max-w-7xl mx-auto">
         <TrendingCities cities={trendingCities} />
       </section>
 
       {/* Newsletter */}
-      <section className="px-4 sm:px-6 lg:px-8 py-12 w-full">
+      <section className="px-4 sm:px-6 lg:px-8 py-12 max-w-7xl mx-auto">
         <Newsletter />
       </section>
 
       {/* Footer */}
       <footer className="border-t border-border/40 pb-12 px-4 sm:px-6 lg:px-8">
-        <div className="w-full">
+        <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-2 md:grid-cols-5 gap-8 mb-8">
             <div>
               <h3 className="font-bold mb-4">{t("footer.discover")}</h3>

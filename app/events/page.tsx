@@ -53,7 +53,7 @@ export default function EventsPage() {
 
   return (
     <main className="min-h-screen py-8" suppressHydrationWarning>
-      <div className="px-4 sm:px-6 lg:px-8 w-full" suppressHydrationWarning>
+      <div className="px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto" suppressHydrationWarning>
         {/* Header */}
         <div className="mb-8" suppressHydrationWarning>
           <h1 className="text-4xl font-bold mb-2" suppressHydrationWarning>{t("eventsPage.title")}</h1>
