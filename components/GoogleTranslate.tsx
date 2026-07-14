@@ -68,9 +68,12 @@ const GoogleTranslate = () => {
     return () => observer.disconnect()
   }, [])
 
+  // The visible language dropdown lives in the header (its #google_translate_element
+  // comes first in the DOM, so Google attaches the widget there). This component only
+  // contributes the shared global styles — rendering a second visible box here just
+  // painted an empty floating square in the corner.
   return (
-    <div className="fixed top-4 right-4 z-50 rounded-lg shadow-lg p-2" style={{backgroundColor: '#124972'}} suppressHydrationWarning>
-      <div id="google_translate_element" suppressHydrationWarning></div>
+    <div suppressHydrationWarning>
       <style jsx global>{`
         /* Hide Google Translate banner */
         .goog-te-banner-frame {
