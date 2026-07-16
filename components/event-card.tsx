@@ -77,6 +77,7 @@ export function EventCard({ event, variant = "grid" }: EventCardProps) {
             <img
               src={event.image || "/placeholder.svg"}
               alt={event.title}
+              onError={(e) => { e.currentTarget.src = "/concert-stage-lights-event.jpg" }}
               className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
@@ -201,6 +202,7 @@ export function EventCard({ event, variant = "grid" }: EventCardProps) {
               <img
                 src={event.image || "/placeholder.svg"}
                 alt={event.title}
+                onError={(e) => { e.currentTarget.src = "/concert-stage-lights-event.jpg" }}
                 className={`w-full h-full object-cover group-hover:scale-110 transition-all duration-300 ${(isHovered || isMobile) ? 'opacity-0' : 'opacity-100'}`}
               />
               <video
@@ -224,6 +226,7 @@ export function EventCard({ event, variant = "grid" }: EventCardProps) {
             <img
               src={event.image || "/placeholder.svg"}
               alt={event.title}
+              onError={(e) => { e.currentTarget.src = "/concert-stage-lights-event.jpg" }}
               className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
             />
           )}
