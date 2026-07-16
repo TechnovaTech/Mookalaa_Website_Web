@@ -134,7 +134,7 @@ export function Header() {
             </Link>
 
             {/* Search Bar - Hidden on mobile */}
-            <form onSubmit={handleSearch} className="hidden lg:flex flex-1 max-w-2xl">
+            <form onSubmit={handleSearch} className="hidden lg:flex flex-1 max-w-2xl mx-auto">
               <div className="relative w-full">
                 <input
                   type="text"
