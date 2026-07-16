@@ -178,7 +178,7 @@ export default function Home() {
             <p className="font-semibold text-foreground">VENOOTIC ENTERPRISES OPC PVT LTD</p>
             <p>CIN: U90001OD2025OPC051514 &nbsp;|&nbsp; GST: 21AALCV6186G1Z3</p>
             <p>Registered Office: Satya Vihar, Rasulghar, Bhubaneswar, Khorda, Odisha, 751010</p>
-            <p className="pt-2">&copy; 2025 Venootic Enterprises OPC Private Limited.
+            <p className="pt-2">&copy; 2026 Venootic Enterprises OPC Private Limited.
 MOOKALAA is a registered trademark of Venootic Enterprises OPC Private Limited.</p>
           </div>
         </div>
