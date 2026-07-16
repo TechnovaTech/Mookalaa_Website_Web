@@ -18,12 +18,20 @@ export function CategorySection({ category, events }: CategorySectionProps) {
 
   if (categoryEvents.length === 0) return null
 
+  const displayName = translateCategory(category)
+  // Display names may already contain the word "events" (e.g. "Art & Culture Events"),
+  // so strip it before composing "Discover ... events happening now"
+  const subtitleName = displayName.replace(/\bevents?\b/gi, "").replace(/\s+/g, " ").trim().toLowerCase()
+  const subtitle = category === "Ollywood"
+    ? "New events will be announced soon — stay tuned"
+    : `${t("category.discover")} ${subtitleName} ${t("category.eventsNow")}`
+
   return (
     <section className="py-12">
       <div className="flex items-center justify-between mb-8" suppressHydrationWarning>
         <div suppressHydrationWarning>
-          <h2 className="text-3xl font-bold mb-2">{translateCategory(category)}</h2>
-          <p className="text-muted-foreground">{t("category.discover")} {translateCategory(category).toLowerCase()} {t("category.eventsNow")}</p>
+          <h2 className="text-3xl font-bold mb-2">{displayName}</h2>
+          <p className="text-muted-foreground">{subtitle}</p>
         </div>
         <Button asChild variant="outline" className="rounded-lg bg-transparent">
           <Link href={`/events?category=${category}`}>

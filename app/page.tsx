@@ -82,6 +82,11 @@ export default function Home() {
               <h3 className="font-bold mb-4">{t("footer.discover")}</h3>
               <ul className="space-y-2 text-sm text-muted-foreground">
                 <li>
+                  <a href="/about" className="hover:text-foreground transition">
+                    About Us
+                  </a>
+                </li>
+                <li>
                   <a href="/events" className="hover:text-foreground transition">
                     {t("footer.browse")}
                   </a>
@@ -169,8 +174,11 @@ export default function Home() {
               </ul>
             </div>
           </div>
-          <div className="border-t border-border pt-8 text-center text-sm text-muted-foreground">
-            <p>&copy; 2025 Venootic Enterprises OPC Private Limited. 
+          <div className="border-t border-border pt-8 text-center text-sm text-muted-foreground space-y-2">
+            <p className="font-semibold text-foreground">VENOOTIC ENTERPRISES OPC PVT LTD</p>
+            <p>CIN: U90001OD2025OPC051514 &nbsp;|&nbsp; GST: 21AALCV6186G1Z3</p>
+            <p>Registered Office: Satya Vihar, Rasulghar, Bhubaneswar, Khorda, Odisha, 751010</p>
+            <p className="pt-2">&copy; 2025 Venootic Enterprises OPC Private Limited.
 MOOKALAA is a registered trademark of Venootic Enterprises OPC Private Limited.</p>
           </div>
         </div>
