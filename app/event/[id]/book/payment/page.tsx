@@ -1,7 +1,8 @@
 "use client"
 
-import { use } from "react"
-import { mockEvents } from "@/lib/mock-data"
+import { use, useState, useEffect } from "react"
+import { fetchEventById } from "@/lib/api"
+import type { Event } from "@/lib/types"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { ChevronLeft, CreditCard, Wallet, Building2, Smartphone } from "lucide-react"
@@ -16,8 +17,13 @@ interface PaymentPageProps {
 export default function PaymentPage({ params }: PaymentPageProps) {
   const { id } = use(params)
   const searchParams = useSearchParams()
-  const event = mockEvents.find((e) => e.id === id)
+  const [event, setEvent] = useState<Event | null>(null)
   const { t } = useLanguage()
+
+  // Live event data from the admin panel.
+  useEffect(() => {
+    fetchEventById(id).then(setEvent)
+  }, [id])
 
   if (!event) return null
 

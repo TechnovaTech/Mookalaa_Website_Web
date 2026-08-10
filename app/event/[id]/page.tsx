@@ -1,6 +1,7 @@
 "use client"
 
-import { mockEvents, getTranslatedEvents } from "@/lib/mock-data"
+import { fetchEventById, fetchApprovedEvents } from "@/lib/api"
+import type { Event } from "@/lib/types"
 import { EventCard } from "@/components/event-card"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
@@ -18,13 +19,34 @@ interface EventDetailProps {
 export default function EventDetailPage({ params }: EventDetailProps) {
   const { t, translateCategory, translateEvent, translateOrganizer, language } = useLanguage()
   const { id } = use(params)
-  const translatedEvents = getTranslatedEvents(language)
-  const event = translatedEvents.find((e) => e.id === id)
+  const [event, setEvent] = useState<Event | null>(null)
+  const [relatedPool, setRelatedPool] = useState<Event[]>([])
+  const [loading, setLoading] = useState(true)
   const [isLiked, setIsLiked] = useState(false)
 
+  // Live data from the admin panel — the same backend the mobile apps use.
+  useEffect(() => {
+    async function loadEvent() {
+      setLoading(true)
+      const eventData = await fetchEventById(id)
+      setEvent(eventData)
+      if (eventData) {
+        setRelatedPool(await fetchApprovedEvents())
+      }
+      setLoading(false)
+    }
+    loadEvent()
+  }, [id])
 
-
-
+  if (loading) {
+    return (
+      <main className="min-h-screen py-12">
+        <div className="w-full text-center">
+          <p className="text-muted-foreground">Loading event...</p>
+        </div>
+      </main>
+    )
+  }
 
   if (!event) {
     return (
@@ -39,7 +61,7 @@ export default function EventDetailPage({ params }: EventDetailProps) {
     )
   }
 
-  const relatedEvents = getRelatedEvents(event, translatedEvents)
+  const relatedEvents = getRelatedEvents(event, relatedPool)
 
   return (
     <main className="min-h-screen py-8">

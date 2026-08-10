@@ -1,7 +1,8 @@
 "use client"
 
-import { useState, use } from "react"
-import { mockEvents } from "@/lib/mock-data"
+import { useState, use, useEffect } from "react"
+import { fetchEventById } from "@/lib/api"
+import type { Event } from "@/lib/types"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { ChevronLeft, ChevronDown } from "lucide-react"
@@ -22,8 +23,13 @@ const ticketTypes = [
 
 export default function BookingPage({ params }: BookingPageProps) {
   const { id } = use(params)
-  const event = mockEvents.find((e) => e.id === id)
+  const [event, setEvent] = useState<Event | null>(null)
   const { t } = useLanguage()
+
+  // Live event data from the admin panel.
+  useEffect(() => {
+    fetchEventById(id).then(setEvent)
+  }, [id])
   
   const ticketTypes = [
     { id: 1, name: t('booking.general'), price: 500, available: 50 },

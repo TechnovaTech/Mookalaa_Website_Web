@@ -5,14 +5,45 @@ import { FeaturedSlider } from "@/components/featured-slider"
 import { CategorySection } from "@/components/category-section"
 import { TrendingCities } from "@/components/trending-cities"
 import { Newsletter } from "@/components/newsletter"
-import { mockEvents, getTranslatedEvents, trendingCities, categories } from "@/lib/mock-data"
+import { trendingCities } from "@/lib/mock-data"
 import { useLanguage } from "@/lib/language-context"
+import { fetchApprovedEvents, fetchCategories } from "@/lib/api"
+import { useEffect, useState } from "react"
+import type { Event } from "@/lib/types"
 
 export default function Home() {
-  const { t, language } = useLanguage()
+  const { t } = useLanguage()
   const excludedCategories = ["Festivals", "Dance", "Workshops", "Custom Orders"]
-  const translatedEvents = getTranslatedEvents(language)
-  const featuredEvents = translatedEvents.filter((e) => e.featured && !excludedCategories.includes(e.category))
+  const [events, setEvents] = useState<Event[]>([])
+  const [categories, setCategories] = useState<string[]>([])
+  const [loading, setLoading] = useState(true)
+
+  // Live data from the admin panel — the same backend the mobile apps use.
+  useEffect(() => {
+    async function loadData() {
+      setLoading(true)
+      const [eventsData, categoriesData] = await Promise.all([
+        fetchApprovedEvents(),
+        fetchCategories(),
+      ])
+      setEvents(eventsData)
+      // Only show categories that actually have an approved event behind them.
+      // De-duplicate first: the admin panel allows two categories with the same
+      // name, which would otherwise collide as React keys.
+      const withEvents = Array.from(new Set<string>(categoriesData)).filter((category) =>
+        eventsData.some((event: Event) => event.category === category),
+      )
+      setCategories(withEvents)
+      setLoading(false)
+    }
+    loadData()
+  }, [])
+
+  const translatedEvents = events
+  // The admin panel has no "featured" flag, so lead with the newest events.
+  const featuredEvents = translatedEvents
+    .filter((e) => !excludedCategories.includes(e.category))
+    .slice(0, 5)
 
   return (
     <main className="min-h-screen">
@@ -43,13 +74,15 @@ export default function Home() {
       </section>
 
       {/* Featured Events Slider */}
-      <section className="px-4 sm:px-6 lg:px-8 py-12 w-full">
-        <div className="mb-8">
-          <h2 className="text-3xl font-bold mb-2">{t("featured.title")}</h2>
-          <p className="text-muted-foreground">{t("featured.subtitle")}</p>
-        </div>
-        <FeaturedSlider events={featuredEvents} />
-      </section>
+      {featuredEvents.length > 0 && (
+        <section className="px-4 sm:px-6 lg:px-8 py-12 w-full">
+          <div className="mb-8">
+            <h2 className="text-3xl font-bold mb-2">{t("featured.title")}</h2>
+            <p className="text-muted-foreground">{t("featured.subtitle")}</p>
+          </div>
+          <FeaturedSlider events={featuredEvents} />
+        </section>
+      )}
 
       {/* Indian Idol Contestants Section */}
       <section className="px-4 sm:px-6 lg:px-8 pb-12 w-full">
@@ -58,11 +91,25 @@ export default function Home() {
 
       {/* Categories */}
       <section className="px-4 sm:px-6 lg:px-8 pb-12 w-full space-y-4">
-        {categories.slice(0, 3).map((category) => (
+        {categories.map((category) => (
           <CategorySection key={category} category={category} events={translatedEvents} />
         ))}
 
       </section>
+
+      {loading && (
+        <section className="px-4 sm:px-6 lg:px-8 py-12 w-full">
+          <p className="text-center text-muted-foreground">Loading events...</p>
+        </section>
+      )}
+
+      {!loading && events.length === 0 && (
+        <section className="px-4 sm:px-6 lg:px-8 py-12 w-full">
+          <p className="text-center text-muted-foreground">
+            No events available right now. Please check back soon.
+          </p>
+        </section>
+      )}
 
       {/* Trending Cities */}
       <section className="px-4 sm:px-6 lg:px-8 pb-12 w-full">
