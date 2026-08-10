@@ -191,3 +191,103 @@ export async function fetchEventById(id: string) {
     return null;
   }
 }
+
+export interface HomeBanner {
+  id: string
+  title: string
+  image: string
+  mediaType: 'image' | 'video'
+  link: string
+  order: number
+}
+
+/**
+ * Homepage banners managed from the admin panel. Adding or removing one there
+ * changes the site on the next load — nothing is hardcoded.
+ *
+ * The API returns every row whatever its state, so inactive banners are
+ * dropped here; without that, deactivating one in the panel would leave it
+ * live on the site.
+ */
+export async function fetchBanners(): Promise<HomeBanner[]> {
+  try {
+    const response = await fetch(`${ADMIN_API_URL}/banners`, {
+      cache: 'no-store',
+      headers: { 'Content-Type': 'application/json' },
+    })
+    if (!response.ok) throw new Error('Failed to fetch banners')
+
+    const data = await response.json()
+    const banners = Array.isArray(data.banners) ? data.banners : []
+
+    return banners
+      .filter((b: any) => (b.status || 'active') === 'active' && b.image)
+      .map((b: any) => ({
+        id: String(b._id || ''),
+        title: b.title || '',
+        image: String(b.image),
+        mediaType: b.mediaType === 'video' ? 'video' : 'image',
+        link: b.link || '',
+        order: Number(b.order) || 0,
+      }))
+      .sort((a: HomeBanner, b: HomeBanner) => a.order - b.order)
+  } catch (error) {
+    console.error('Error fetching banners:', error)
+    return []
+  }
+}
+
+export interface SponsorAd {
+  id: string
+  title: string
+  image: string
+  mediaType: 'image' | 'video'
+  link: string
+  sponsor: string
+  order: number
+}
+
+/**
+ * Sponsor ads from the admin panel, filtered the same way the mobile app
+ * filters them: active only, and only while today sits inside the campaign's
+ * start/end dates. An ad whose window has passed disappears on its own.
+ */
+export async function fetchAds(): Promise<SponsorAd[]> {
+  try {
+    const response = await fetch(`${ADMIN_API_URL}/ads`, {
+      cache: 'no-store',
+      headers: { 'Content-Type': 'application/json' },
+    })
+    if (!response.ok) throw new Error('Failed to fetch ads')
+
+    const data = await response.json()
+    const ads = Array.isArray(data.ads) ? data.ads : []
+    const now = Date.now()
+
+    return ads
+      .filter((ad: any) => {
+        if ((ad.status || 'active') !== 'active' || !ad.image) return false
+
+        // Missing or unparseable dates mean "no window", so the ad runs.
+        const start = ad.startDate ? Date.parse(ad.startDate) : NaN
+        const end = ad.endDate ? Date.parse(ad.endDate) : NaN
+        if (Number.isNaN(start) || Number.isNaN(end)) return true
+
+        // End date is inclusive — the campaign runs through that whole day.
+        return now >= start && now <= end + 24 * 60 * 60 * 1000
+      })
+      .map((ad: any) => ({
+        id: String(ad._id || ''),
+        title: ad.title || '',
+        image: String(ad.image),
+        mediaType: ad.mediaType === 'video' ? 'video' : 'image',
+        link: ad.link || '',
+        sponsor: ad.sponsor || '',
+        order: Number(ad.order) || 0,
+      }))
+      .sort((a: SponsorAd, b: SponsorAd) => a.order - b.order)
+  } catch (error) {
+    console.error('Error fetching ads:', error)
+    return []
+  }
+}

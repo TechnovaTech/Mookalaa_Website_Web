@@ -5,6 +5,7 @@ import { FeaturedSlider } from "@/components/featured-slider"
 import { CategorySection } from "@/components/category-section"
 import { TrendingCities } from "@/components/trending-cities"
 import { Newsletter } from "@/components/newsletter"
+import { SponsorAds } from "@/components/sponsor-ads"
 import { buildTrendingCities } from "@/lib/cities"
 import { useLanguage } from "@/lib/language-context"
 import { fetchApprovedEvents, fetchCategories } from "@/lib/api"
@@ -85,6 +86,9 @@ export default function Home() {
           <FeaturedSlider events={featuredEvents} />
         </section>
       )}
+
+      {/* Sponsor Ads — managed from the admin panel, hides itself when empty */}
+      <SponsorAds />
 
       {/* Indian Idol Contestants Section */}
       <section className="px-4 sm:px-6 lg:px-8 pb-12 w-full">
