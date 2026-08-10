@@ -1,0 +1,499 @@
+import 'package:flutter/material.dart';
+import 'create_ticket_screen.dart';
+import 'dashboard_screen.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
+import '../services/auth_service.dart';
+
+class AddTicketsScreen extends StatefulWidget {
+  final Map<String, dynamic> eventData;
+  
+  const AddTicketsScreen({super.key, required this.eventData});
+
+  @override
+  State<AddTicketsScreen> createState() => _AddTicketsScreenState();
+}
+
+class _AddTicketsScreenState extends State<AddTicketsScreen> {
+  List<Map<String, dynamic>> _tickets = [];
+  bool _isLoading = false;
+  Map<String, dynamic>? _venueData;
+  bool _loadingVenue = true;
+
+  /// Non-null when we were opened for an event that already exists in the DB
+  /// (from the dashboard), rather than as the last step of the create wizard.
+  String? get _existingEventId {
+    final id = widget.eventData['_id'];
+    if (id == null) return null;
+    final value = id.toString().trim();
+    return value.isEmpty ? null : value;
+  }
+
+  bool get _isExistingEvent => _existingEventId != null;
+
+  @override
+  void initState() {
+    super.initState();
+    // Start from the tickets the event already has, so saving doesn't wipe them.
+    final existing = widget.eventData['tickets'];
+    if (existing is List) {
+      _tickets = existing
+          .whereType<Map>()
+          .map((ticket) => Map<String, dynamic>.from(ticket))
+          .toList();
+    }
+    _fetchVenueDetails();
+  }
+
+  Future<void> _fetchVenueDetails() async {
+    // location is a map on a real event, but older callers passed a bare city
+    // string — indexing that with 'name' throws, so check the type first.
+    final location = widget.eventData['location'];
+    final venueName = location is Map ? location['name'] : null;
+
+    if (venueName != null && venueName.toString().trim().isNotEmpty) {
+      try {
+        final response = await http.get(
+          Uri.parse('https://mookala.vercel.app/api/venues?name=${Uri.encodeComponent(venueName.toString())}'),
+        );
+        if (response.statusCode == 200) {
+          final data = json.decode(response.body);
+          if (data['success'] && data['venues'] != null && data['venues'].isNotEmpty) {
+            setState(() {
+              _venueData = data['venues'][0];
+              _loadingVenue = false;
+            });
+          } else {
+            setState(() => _loadingVenue = false);
+          }
+        } else {
+          setState(() => _loadingVenue = false);
+        }
+      } catch (e) {
+        setState(() => _loadingVenue = false);
+      }
+    } else {
+      setState(() => _loadingVenue = false);
+    }
+  }
+
+  void _addTicket() async {
+    final result = await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => CreateTicketScreen(venueData: _venueData)),
+    );
+    
+    if (result != null && result is List) {
+      setState(() {
+        for (var ticket in result) {
+          _tickets.add({
+            'id': '1211${4225 + _tickets.length}',
+            'name': ticket['name'],
+            'price': '₹${ticket['price']}.00',
+            'quantity': ticket['quantity'],
+            'sold': '0',
+            'blockName': ticket['blockName'],
+            'startSeat': ticket['startSeat'],
+            'endSeat': ticket['endSeat'],
+            'priceType': ticket['priceType'],
+          });
+        }
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        backgroundColor: const Color(0xFF001F3F),
+        elevation: 0,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          onPressed: () {
+            if (_isExistingEvent) {
+              Navigator.pop(context);
+            } else {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => const DashboardScreen()),
+              );
+            }
+          },
+        ),
+        title: Text(
+          _isExistingEvent ? 'Manage Tickets' : 'Add Tickets',
+          style: const TextStyle(
+            color: Colors.white,
+            fontSize: 18,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+      ),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(24.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              _isExistingEvent ? 'Manage Tickets' : 'Add Tickets',
+              style: const TextStyle(
+                fontSize: 28,
+                fontWeight: FontWeight.bold,
+                color: Colors.black87,
+              ),
+            ),
+            const SizedBox(height: 12),
+            Text(
+              _isExistingEvent
+                  ? 'Add or update ticket categories for "${widget.eventData['name'] ?? 'this event'}". Saving updates this event — it will not create a new one.'
+                  : 'Adding tickets to your event increases its visibility in AllEvents marketing campaigns.',
+              style: TextStyle(
+                fontSize: 16,
+                color: Colors.grey.shade600,
+                height: 1.4,
+              ),
+            ),
+            const SizedBox(height: 32),
+            
+            // Add tickets button
+            Container(
+              width: double.infinity,
+              child: ElevatedButton.icon(
+                onPressed: _addTicket,
+                icon: const Icon(Icons.confirmation_number, color: Colors.white),
+                label: const Text(
+                  'Manage Tickets',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.white,
+                  ),
+                ),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFF001F3F),
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
+              ),
+            ),
+            
+            const SizedBox(height: 40),
+            
+            // Benefits list
+            _buildBenefitItem(
+              Icons.star_outline,
+              'Top rankings & better visibility on search engines',
+              const Color(0xFF52B6E8),
+            ),
+            const SizedBox(height: 24),
+            
+            _buildBenefitItem(
+              Icons.flash_on_outlined,
+              'Instant & direct payments to your account',
+              const Color(0xFFFFA726),
+            ),
+            const SizedBox(height: 24),
+            
+            _buildBenefitItem(
+              Icons.notifications_outlined,
+              'Booking reminders for incomplete transactions',
+              const Color(0xFFFF7043),
+            ),
+            
+            // Display created tickets
+            if (_tickets.isNotEmpty) ...[
+              const SizedBox(height: 32),
+              const Text(
+                'Created Tickets',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black87,
+                ),
+              ),
+              const SizedBox(height: 16),
+              
+              ..._tickets.map((ticket) => Container(
+                margin: const EdgeInsets.only(bottom: 16),
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(color: Colors.grey.shade300),
+                ),
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        const Icon(Icons.drag_indicator, color: Colors.grey),
+                        const SizedBox(width: 12),
+                        Text(
+                          ticket['name'],
+                          style: const TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const Spacer(),
+                        const Icon(Icons.more_vert, color: Colors.grey),
+                      ],
+                    ),
+                    const SizedBox(height: 12),
+                    Row(
+                      children: [
+                        const SizedBox(width: 36),
+                        Expanded(
+                          child: Column(
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  const Text('Ticket ID', style: TextStyle(color: Colors.grey)),
+                                  Text(ticket['id']),
+                                ],
+                              ),
+                              const SizedBox(height: 8),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  const Text('Price', style: TextStyle(color: Colors.grey)),
+                                  Text(ticket['price']),
+                                ],
+                              ),
+                              const SizedBox(height: 8),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  const Text('Sold/Qty', style: TextStyle(color: Colors.grey)),
+                                  Text('${ticket['sold']}/${ticket['quantity']}'),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 12),
+                    Row(
+                      children: [
+                        const SizedBox(width: 36),
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                          decoration: BoxDecoration(
+                            color: Colors.green.shade100,
+                            borderRadius: BorderRadius.circular(12),
+                            border: Border.all(color: Colors.green.shade300),
+                          ),
+                          child: const Text(
+                            'ON SALE',
+                            style: TextStyle(
+                              color: Colors.green,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              )).toList(),
+            ],
+            
+            const SizedBox(height: 40),
+            
+            // Saves tickets onto an existing event, or creates a new one when
+            // this is the final step of the create-event wizard.
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: _isLoading
+                    ? null
+                    : (_isExistingEvent ? _saveTicketsToExistingEvent : _createCompleteEvent),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFF001F3F),
+                  foregroundColor: Colors.white,
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                ),
+                child: _isLoading
+                    ? const CircularProgressIndicator(color: Colors.white)
+                    : Text(
+                        _isExistingEvent ? 'Save Tickets' : 'Create Event',
+                        style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                      ),
+              ),
+            ),
+
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildBenefitItem(IconData icon, String text, Color iconColor) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          padding: const EdgeInsets.all(8),
+          decoration: BoxDecoration(
+            color: iconColor.withOpacity(0.1),
+            borderRadius: BorderRadius.circular(8),
+          ),
+          child: Icon(
+            icon,
+            color: iconColor,
+            size: 24,
+          ),
+        ),
+        const SizedBox(width: 16),
+        Expanded(
+          child: Padding(
+            padding: const EdgeInsets.only(top: 4),
+            child: Text(
+              text,
+              style: TextStyle(
+                fontSize: 16,
+                color: Colors.grey.shade700,
+                height: 1.4,
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  /// Save tickets onto an event that already exists. Must never POST /api/events,
+  /// or managing tickets would create a duplicate event.
+  Future<void> _saveTicketsToExistingEvent() async {
+    setState(() {
+      _isLoading = true;
+    });
+
+    try {
+      final response = await http.patch(
+        Uri.parse('https://mookala.vercel.app/api/events/$_existingEventId'),
+        headers: {'Content-Type': 'application/json'},
+        body: json.encode({'tickets': _tickets}),
+      );
+
+      if (!mounted) return;
+
+      if (response.statusCode == 200) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Tickets saved successfully!')),
+        );
+        Navigator.pop(context, true);
+      } else {
+        throw Exception('Server returned ${response.statusCode}');
+      }
+    } catch (e) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error saving tickets: $e')),
+      );
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isLoading = false;
+        });
+      }
+    }
+  }
+
+  Future<void> _createCompleteEvent() async {
+    setState(() {
+      _isLoading = true;
+    });
+
+    try {
+      final userData = await AuthService.getUserData();
+      final userPhone = userData['phone'];
+      final userRole = userData['role'];
+
+      if (userPhone == null || userRole == null) {
+        throw Exception('User not logged in');
+      }
+
+      // Clean languages array - remove null values
+      List<String> cleanLanguages = [];
+      if (widget.eventData['languages'] != null && widget.eventData['languages'] is List) {
+        final languages = widget.eventData['languages'] as List;
+        cleanLanguages = languages
+            .where((lang) => lang != null && lang.toString().trim().isNotEmpty)
+            .map((lang) => lang.toString())
+            .toList();
+      }
+      
+      // Clean and simplify event data
+      final completeEventData = {
+        'name': widget.eventData['name'] ?? 'Untitled Event',
+        'category': widget.eventData['category'],
+        'subCategories': widget.eventData['subCategories'] ?? [],
+        'languages': cleanLanguages,
+        'description': widget.eventData['description'],
+        'terms': widget.eventData['terms'],
+        'locationType': widget.eventData['locationType'] ?? 'venue',
+        'startDate': widget.eventData['startDate'] ?? '',
+        'startTime': widget.eventData['startTime'] ?? '',
+        'endDate': widget.eventData['endDate'] ?? '',
+        'endTime': widget.eventData['endTime'] ?? '',
+        'organizerPhone': userPhone,
+        'organizerRole': userRole,
+        'scannerStaff': widget.eventData['scannerStaff'] ?? [],
+        'tickets': _tickets,
+        'status': 'pending',
+      };
+
+      // Add location data based on type
+      if (widget.eventData['location'] != null) {
+        completeEventData['location'] = widget.eventData['location'];
+      }
+      if (widget.eventData['recordedDetails'] != null) {
+        completeEventData['recordedDetails'] = widget.eventData['recordedDetails'];
+      }
+      if (widget.eventData['media'] != null) {
+        completeEventData['media'] = widget.eventData['media'];
+      }
+      if (widget.eventData['artists'] != null) {
+        completeEventData['artists'] = (widget.eventData['artists'] as List).map((artist) => artist['_id']).toList();
+      }
+
+      print('Sending event data: $completeEventData');
+
+      final response = await http.post(
+        Uri.parse('https://mookala.vercel.app/api/events'),
+        headers: {'Content-Type': 'application/json'},
+        body: json.encode(completeEventData),
+      );
+
+      if (response.statusCode == 201) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Event created successfully! Waiting for admin approval.')),
+        );
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => const DashboardScreen()),
+          (route) => false,
+        );
+      } else {
+        throw Exception('Failed to create event');
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error creating event: $e')),
+      );
+    } finally {
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }
+}

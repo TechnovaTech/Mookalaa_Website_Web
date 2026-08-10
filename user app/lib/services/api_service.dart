@@ -1,0 +1,536 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
+
+class ApiService {
+  static const String baseUrl = 'https://mookala.vercel.app/api';
+  
+  static Future<Map<String, dynamic>> registerPhone(String phone) async {
+    try {
+      final response = await http.post(
+        Uri.parse('$baseUrl/user/register'),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({'phone': phone}),
+      );
+      
+      return jsonDecode(response.body);
+    } catch (e) {
+      return {'success': false, 'error': 'Network error'};
+    }
+  }
+  
+  static Future<Map<String, dynamic>> verifyOTP(String phone, String otp) async {
+    try {
+      final response = await http.post(
+        Uri.parse('$baseUrl/user/verify-otp'),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({'phone': phone, 'otp': otp}),
+      );
+      
+      return jsonDecode(response.body);
+    } catch (e) {
+      return {'success': false, 'error': 'Network error'};
+    }
+  }
+  
+  static Future<Map<String, dynamic>> updateProfile({
+    required String phone,
+    String? name,
+    String? email,
+    String? city,
+    String? profileImage,
+    List<String>? genres,
+  }) async {
+    try {
+      final Map<String, dynamic> body = {'phone': phone};
+      if (name != null && name.isNotEmpty) body['name'] = name;
+      if (email != null && email.isNotEmpty) body['email'] = email;
+      if (city != null && city.isNotEmpty) body['city'] = city;
+      if (profileImage != null) body['profileImage'] = profileImage;
+      if (genres != null) body['genres'] = genres;
+      
+      final response = await http.post(
+        Uri.parse('$baseUrl/user/profile'),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode(body),
+      );
+      
+      return jsonDecode(response.body);
+    } catch (e) {
+      return {'success': false, 'error': 'Network error'};
+    }
+  }
+  
+  static Future<Map<String, dynamic>> getProfile(String phone) async {
+    try {
+      final response = await http.get(
+        Uri.parse('$baseUrl/user/profile?phone=$phone'),
+        headers: {'Content-Type': 'application/json'},
+      );
+      
+      if (response.statusCode == 404) {
+        return {'success': false, 'error': 'User not found'};
+      }
+      
+      return jsonDecode(response.body);
+    } catch (e) {
+      return {'success': false, 'error': 'Network error'};
+    }
+  }
+  
+  static Future<List<String>> getGenres() async {
+    try {
+      final response = await http.get(
+        Uri.parse('$baseUrl/genres'),
+        headers: {'Content-Type': 'application/json'},
+      );
+      
+      final data = jsonDecode(response.body);
+      if (data['success']) {
+        return List<String>.from(data['genres']);
+      }
+      return [];
+    } catch (e) {
+      return [];
+    }
+  }
+  
+  static Future<void> saveUserPhone(String phone) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('user_phone', phone);
+  }
+  
+  static Future<String?> getUserPhone() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString('user_phone');
+  }
+  
+  static Future<void> clearUserData() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove('user_phone');
+  }
+  
+  static Future<Map<String, dynamic>> getArtists() async {
+    try {
+      final response = await http.get(
+        Uri.parse('$baseUrl/artists'),
+        headers: {'Content-Type': 'application/json'},
+      );
+      
+      return jsonDecode(response.body);
+    } catch (e) {
+      return {'success': false, 'error': 'Network error'};
+    }
+  }
+  
+  static Future<Map<String, dynamic>> getApprovedEvents({String? category}) async {
+    try {
+      String url = '$baseUrl/events/approved';
+      if (category != null && category.isNotEmpty) {
+        url += '?category=${Uri.encodeComponent(category)}';
+      }
+      
+      print('Calling API: $url');
+      final response = await http.get(
+        Uri.parse(url),
+        headers: {'Content-Type': 'application/json'},
+      );
+      
+      print('API Response Status: ${response.statusCode}');
+      print('API Response Body: ${response.body}');
+      
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        print('Parsed API Data: $data');
+        return data;
+      } else {
+        print('API Error: Status ${response.statusCode}');
+        return {'success': false, 'error': 'API returned status ${response.statusCode}'};
+      }
+    } catch (e) {
+      print('Network Error: $e');
+      return {'success': false, 'error': 'Network error: $e'};
+    }
+  }
+  
+  static Future<Map<String, dynamic>> getEventDetails(String eventId) async {
+    try {
+      final response = await http.get(
+        Uri.parse('$baseUrl/events/$eventId'),
+        headers: {'Content-Type': 'application/json'},
+      );
+      
+      return jsonDecode(response.body);
+    } catch (e) {
+      return {'success': false, 'error': 'Network error'};
+    }
+  }
+  
+  static Future<Map<String, dynamic>> getVenueDetails(String venueId) async {
+    try {
+      final response = await http.get(
+        Uri.parse('$baseUrl/venues/$venueId'),
+        headers: {'Content-Type': 'application/json'},
+      );
+      
+      return jsonDecode(response.body);
+    } catch (e) {
+      return {'success': false, 'error': 'Network error'};
+    }
+  }
+  
+  static Future<Map<String, dynamic>> getVenueByName(String venueName) async {
+    try {
+      final response = await http.get(
+        Uri.parse('$baseUrl/venues?name=${Uri.encodeComponent(venueName)}'),
+        headers: {'Content-Type': 'application/json'},
+      );
+      
+      return jsonDecode(response.body);
+    } catch (e) {
+      return {'success': false, 'error': 'Network error'};
+    }
+  }
+  
+  static Future<Map<String, dynamic>> getFeaturedEvents() async {
+    try {
+      final response = await http.get(
+        Uri.parse('$baseUrl/events'),
+        headers: {'Content-Type': 'application/json'},
+      );
+      
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        return {'success': true, 'events': data['events'] ?? []};
+      } else {
+        return {'success': false, 'error': 'Failed to fetch events'};
+      }
+    } catch (e) {
+      return {'success': false, 'error': 'Network error: $e'};
+    }
+  }
+  
+  static Future<Map<String, dynamic>> getVenueById(String venueId) async {
+    try {
+      final response = await http.get(
+        Uri.parse('$baseUrl/venues/$venueId'),
+        headers: {'Content-Type': 'application/json'},
+      );
+      
+      if (response.statusCode == 200) {
+        return jsonDecode(response.body);
+      } else {
+        return {'success': false, 'error': 'Venue not found'};
+      }
+    } catch (e) {
+      return {'success': false, 'error': 'Network error: $e'};
+    }
+  }
+  
+  static Future<List<Map<String, dynamic>>> getBanners() async {
+    try {
+      final response = await http.get(
+        Uri.parse('$baseUrl/banners'),
+        headers: {'Content-Type': 'application/json'},
+      );
+      
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        if (data['success'] == true && data['banners'] != null) {
+          return List<Map<String, dynamic>>.from(data['banners']);
+        }
+      }
+      return [];
+    } catch (e) {
+      print('Error fetching banners: $e');
+      return [];
+    }
+  }
+  
+  static Future<List<Map<String, dynamic>>> getCategories() async {
+    try {
+      final response = await http.get(
+        Uri.parse('$baseUrl/categories'),
+        headers: {'Content-Type': 'application/json'},
+      );
+      
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        if (data is List) {
+          return List<Map<String, dynamic>>.from(data);
+        }
+      }
+      return [];
+    } catch (e) {
+      print('Error fetching categories: $e');
+      return [];
+    }
+  }
+  
+  static Future<List<Map<String, dynamic>>> getAds() async {
+    try {
+      final response = await http.get(
+        Uri.parse('$baseUrl/ads'),
+        headers: {'Content-Type': 'application/json'},
+      );
+      
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        if (data['success'] == true && data['ads'] != null) {
+          return List<Map<String, dynamic>>.from(data['ads']);
+        }
+      }
+      return [];
+    } catch (e) {
+      print('Error fetching ads: $e');
+      return [];
+    }
+  }
+  
+  static Future<Map<String, dynamic>> toggleFollowArtist({
+    required String artistId,
+    required String userPhone,
+    required String action,
+  }) async {
+    try {
+      final response = await http.post(
+        Uri.parse('$baseUrl/artists/follow'),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({
+          'artistId': artistId,
+          'userPhone': userPhone,
+          'action': action,
+        }),
+      );
+      
+      return jsonDecode(response.body);
+    } catch (e) {
+      return {'success': false, 'error': 'Network error: $e'};
+    }
+  }
+  
+  static Future<Map<String, dynamic>> checkFollowStatus({
+    required String artistId,
+    required String userPhone,
+  }) async {
+    try {
+      final response = await http.get(
+        Uri.parse('$baseUrl/user/follow-status?artistId=$artistId&userPhone=$userPhone'),
+        headers: {'Content-Type': 'application/json'},
+      );
+      
+      return jsonDecode(response.body);
+    } catch (e) {
+      return {'success': false, 'error': 'Network error: $e'};
+    }
+  }
+  
+  static Future<Map<String, dynamic>> getArtistFollowerCount(String artistId) async {
+    try {
+      final response = await http.get(
+        Uri.parse('$baseUrl/artists/follower-count?artistId=$artistId'),
+        headers: {'Content-Type': 'application/json'},
+      );
+      
+      return jsonDecode(response.body);
+    } catch (e) {
+      return {'success': false, 'error': 'Network error: $e'};
+    }
+  }
+  
+  static Future<Map<String, dynamic>> getVenues() async {
+    try {
+      final response = await http.get(
+        Uri.parse('$baseUrl/venues'),
+        headers: {'Content-Type': 'application/json'},
+      );
+      
+      return jsonDecode(response.body);
+    } catch (e) {
+      return {'success': false, 'error': 'Network error: $e'};
+    }
+  }
+  
+  static Future<void> saveBookingLocally(Map<String, dynamic> bookingData) async {
+    try {
+      // Try to save to server first
+      final response = await http.post(
+        Uri.parse('$baseUrl/bookings'),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode(bookingData),
+      );
+      
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        if (data['success'] == true) {
+          // Successfully saved to server, also save locally as backup
+          final prefs = await SharedPreferences.getInstance();
+          final userPhone = bookingData['userPhone'];
+          final existingBookings = prefs.getStringList('bookings_$userPhone') ?? [];
+          existingBookings.add(jsonEncode(bookingData));
+          await prefs.setStringList('bookings_$userPhone', existingBookings);
+          return;
+        }
+      }
+    } catch (e) {
+      print('Error saving to server: $e');
+    }
+    
+    // Fallback to local storage only
+    final prefs = await SharedPreferences.getInstance();
+    final userPhone = bookingData['userPhone'];
+    final existingBookings = prefs.getStringList('bookings_$userPhone') ?? [];
+    existingBookings.add(jsonEncode(bookingData));
+    await prefs.setStringList('bookings_$userPhone', existingBookings);
+  }
+  
+  static Future<Map<String, dynamic>> getUserBookings(String userPhone) async {
+    try {
+      // Try to fetch from server first
+      final response = await http.get(
+        Uri.parse('$baseUrl/bookings?userPhone=$userPhone'),
+        headers: {'Content-Type': 'application/json'},
+      );
+      
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        if (data['success'] == true) {
+          return data;
+        }
+      }
+      
+      // Fallback to local storage
+      final prefs = await SharedPreferences.getInstance();
+      final bookingStrings = prefs.getStringList('bookings_$userPhone') ?? [];
+      final bookings = bookingStrings.map((str) => jsonDecode(str)).toList();
+      return {'success': true, 'bookings': bookings};
+    } catch (e) {
+      // Fallback to local storage on error
+      try {
+        final prefs = await SharedPreferences.getInstance();
+        final bookingStrings = prefs.getStringList('bookings_$userPhone') ?? [];
+        final bookings = bookingStrings.map((str) => jsonDecode(str)).toList();
+        return {'success': true, 'bookings': bookings};
+      } catch (localError) {
+        return {'success': false, 'error': 'Error loading bookings: $localError'};
+      }
+    }
+  }
+  
+  static Future<Map<String, dynamic>> checkSeatConflicts(String userPhone, String eventId, List<Map<String, dynamic>> selectedTickets) async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final bookingStrings = prefs.getStringList('bookings_$userPhone') ?? [];
+      final existingBookings = bookingStrings.map((str) => jsonDecode(str)).toList();
+      
+      // Check for conflicts with existing bookings for the same event
+      for (var existingBooking in existingBookings) {
+        if (existingBooking['eventId'] == eventId) {
+          final existingTickets = existingBooking['tickets'] as List;
+          
+          for (var selectedTicket in selectedTickets) {
+            for (var existingTicket in existingTickets) {
+              if (selectedTicket['block'] == existingTicket['block']) {
+                // Check for seat range overlap
+                final selectedFrom = selectedTicket['fromSeat'] as int;
+                final selectedTo = selectedTicket['toSeat'] as int;
+                final existingFrom = existingTicket['fromSeat'] as int;
+                final existingTo = existingTicket['toSeat'] as int;
+                
+                if ((selectedFrom <= existingTo && selectedTo >= existingFrom)) {
+                  return {
+                    'hasConflict': true,
+                    'message': 'Seats ${selectedTicket['block']}$selectedFrom-${selectedTicket['block']}$selectedTo are already booked for this event'
+                  };
+                }
+              }
+            }
+          }
+        }
+      }
+      
+      return {'hasConflict': false};
+    } catch (e) {
+      return {'hasConflict': false};
+    }
+  }
+
+  // ===== Hire Photographer / Videographer =====
+
+  static Future<List<Map<String, dynamic>>> getProfessionals({String? type}) async {
+    try {
+      String url = '$baseUrl/professionals';
+      if (type != null && type.isNotEmpty) {
+        url += '?type=$type';
+      }
+      final response = await http.get(
+        Uri.parse(url),
+        headers: {'Content-Type': 'application/json'},
+      );
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        if (data['success'] == true && data['professionals'] != null) {
+          return List<Map<String, dynamic>>.from(data['professionals']);
+        }
+      }
+      return [];
+    } catch (e) {
+      print('Error fetching professionals: $e');
+      return [];
+    }
+  }
+
+  static Future<Map<String, dynamic>> createHireRequest({
+    required String professionalId,
+    required String professionalName,
+    required String type,
+    required String userPhone,
+    String? userName,
+    String? eventDate,
+    String? city,
+    String? message,
+  }) async {
+    try {
+      final response = await http.post(
+        Uri.parse('$baseUrl/hire-requests'),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({
+          'professionalId': professionalId,
+          'professionalName': professionalName,
+          'type': type,
+          'userPhone': userPhone,
+          'userName': userName ?? '',
+          'eventDate': eventDate ?? '',
+          'city': city ?? '',
+          'message': message ?? '',
+        }),
+      );
+      return jsonDecode(response.body);
+    } catch (e) {
+      return {'success': false, 'error': 'Network error: $e'};
+    }
+  }
+
+  // ===== Ticket QR verification (real backend check-in) =====
+
+  static Future<Map<String, dynamic>> verifyTicket({
+    String? bookingId,
+    String? qrData,
+    bool checkOnly = false,
+  }) async {
+    try {
+      final response = await http.post(
+        Uri.parse('$baseUrl/bookings/verify'),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({
+          if (bookingId != null) 'bookingId': bookingId,
+          if (qrData != null) 'qrData': qrData,
+          'checkOnly': checkOnly,
+        }),
+      );
+      return jsonDecode(response.body);
+    } catch (e) {
+      return {'success': false, 'error': 'Network error: $e'};
+    }
+  }
+}
