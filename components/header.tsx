@@ -264,8 +264,8 @@ export function Header() {
           <div className="rounded-lg border border-border p-4 flex flex-col items-center text-center gap-3">
             <Smartphone className="h-8 w-8 text-accent" />
             <div>
-              <p className="font-semibold">Mookalaa Artist App</p>
-              <p className="text-xs text-muted-foreground">For artists — manage your profile & bookings</p>
+              <p className="font-semibold">Mookalaa Partner App</p>
+              <p className="text-xs text-muted-foreground">Manage your profile & bookings</p>
             </div>
             <Button asChild size="sm" className="w-full rounded-lg bg-accent hover:bg-accent/90 mt-auto">
               <a href={MOOKALAA_ARTIST_APP_APK_URL} onClick={(e) => MOOKALAA_ARTIST_APP_APK_URL === "#" && e.preventDefault()}>
