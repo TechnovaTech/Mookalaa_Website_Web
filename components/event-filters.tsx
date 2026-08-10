@@ -1,10 +1,10 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { categories } from "@/lib/mock-data"
+import { fetchCategories } from "@/lib/api"
 import type { FilterOptions } from "@/lib/types"
 import { useLanguage } from "@/lib/language-context"
 
@@ -17,6 +17,12 @@ interface EventFiltersProps {
 export function EventFilters({ filters, onFiltersChange, onClear }: EventFiltersProps) {
   const { t, translateCategory } = useLanguage()
   const [isOpen, setIsOpen] = useState(false)
+  // Categories come from the admin panel, not a hardcoded list.
+  const [categories, setCategories] = useState<string[]>([])
+
+  useEffect(() => {
+    fetchCategories().then((list) => setCategories(Array.from(new Set<string>(list))))
+  }, [])
 
   const updateFilter = <K extends keyof FilterOptions>(key: K, value: FilterOptions[K]) => {
     onFiltersChange({ ...filters, [key]: value })

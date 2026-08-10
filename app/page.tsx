@@ -5,7 +5,7 @@ import { FeaturedSlider } from "@/components/featured-slider"
 import { CategorySection } from "@/components/category-section"
 import { TrendingCities } from "@/components/trending-cities"
 import { Newsletter } from "@/components/newsletter"
-import { trendingCities } from "@/lib/mock-data"
+import { buildTrendingCities } from "@/lib/cities"
 import { useLanguage } from "@/lib/language-context"
 import { fetchApprovedEvents, fetchCategories } from "@/lib/api"
 import { useEffect, useState } from "react"
@@ -40,6 +40,8 @@ export default function Home() {
   }, [])
 
   const translatedEvents = events
+  // Cities are derived from where approved events actually are.
+  const trendingCities = buildTrendingCities(events)
   // The admin panel has no "featured" flag, so lead with the newest events.
   const featuredEvents = translatedEvents
     .filter((e) => !excludedCategories.includes(e.category))
@@ -112,9 +114,11 @@ export default function Home() {
       )}
 
       {/* Trending Cities */}
-      <section className="px-4 sm:px-6 lg:px-8 pb-12 w-full">
-        <TrendingCities cities={trendingCities} />
-      </section>
+      {trendingCities.length > 0 && (
+        <section className="px-4 sm:px-6 lg:px-8 pb-12 w-full">
+          <TrendingCities cities={trendingCities} />
+        </section>
+      )}
 
       {/* Newsletter */}
       <section className="px-4 sm:px-6 lg:px-8 py-12 w-full">

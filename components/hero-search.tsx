@@ -1,15 +1,21 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import { Search, MapPin, Calendar } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { categories } from "@/lib/mock-data"
+import { fetchCategories } from "@/lib/api"
 import { useLanguage } from "@/lib/language-context"
 
 export function HeroSearch() {
   const router = useRouter()
   const { t } = useLanguage()
+  // Categories come from the admin panel, not a hardcoded list.
+  const [categories, setCategories] = useState<string[]>([])
+
+  useEffect(() => {
+    fetchCategories().then((list) => setCategories(Array.from(new Set<string>(list))))
+  }, [])
   const [eventType, setEventType] = useState("")
   const [location, setLocation] = useState("")
   const [date, setDate] = useState("")
