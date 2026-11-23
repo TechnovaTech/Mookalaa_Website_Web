@@ -1,7 +1,7 @@
 "use client"
 
 import { HeroSearch } from "@/components/hero-search"
-import { FeaturedSlider } from "@/components/featured-slider"
+import { Sparkles } from "lucide-react"
 import { CategorySection } from "@/components/category-section"
 import { TrendingCities } from "@/components/trending-cities"
 import { Newsletter } from "@/components/newsletter"
@@ -14,7 +14,6 @@ import type { Event } from "@/lib/types"
 
 export default function Home() {
   const { t } = useLanguage()
-  const excludedCategories = ["Festivals", "Dance", "Workshops", "Custom Orders"]
   const [events, setEvents] = useState<Event[]>([])
   const [categories, setCategories] = useState<string[]>([])
   const [loading, setLoading] = useState(true)
@@ -43,10 +42,6 @@ export default function Home() {
   const translatedEvents = events
   // Cities are derived from where approved events actually are.
   const trendingCities = buildTrendingCities(events)
-  // The admin panel has no "featured" flag, so lead with the newest events.
-  const featuredEvents = translatedEvents
-    .filter((e) => !excludedCategories.includes(e.category))
-    .slice(0, 5)
 
   return (
     <main className="min-h-screen">
@@ -76,16 +71,21 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Featured Events Slider */}
-      {featuredEvents.length > 0 && (
-        <section className="px-4 sm:px-6 lg:px-8 py-12 w-full">
-          <div className="mb-8">
-            <h2 className="text-3xl font-bold mb-2">{t("featured.title")}</h2>
-            <p className="text-muted-foreground">{t("featured.subtitle")}</p>
-          </div>
-          <FeaturedSlider events={featuredEvents} />
-        </section>
-      )}
+      {/* Featured Events: a Coming Soon card until featured events go live */}
+      <section className="px-4 sm:px-6 lg:px-8 py-12 w-full">
+        <div className="mb-8 flex items-center gap-4">
+          <span aria-hidden className="h-10 sm:h-12 w-1.5 rounded-full bg-gradient-to-b from-amber-400 to-amber-600" />
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight bg-gradient-to-r from-amber-400 via-amber-200 to-amber-500 bg-clip-text text-transparent">
+            {t("featured.title")}
+          </h2>
+        </div>
+        <div className="relative overflow-hidden rounded-2xl border border-amber-500/30 bg-gradient-to-br from-amber-500/15 via-card to-amber-600/15 h-64 sm:h-80 flex flex-col items-center justify-center gap-4 text-center px-6">
+          <Sparkles size={40} className="text-amber-400" aria-hidden />
+          <p className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight bg-gradient-to-r from-amber-400 via-amber-200 to-amber-500 bg-clip-text text-transparent">
+            Coming Soon
+          </p>
+        </div>
+      </section>
 
       {/* Sponsor Ads — managed from the admin panel, hides itself when empty */}
       <SponsorAds />
@@ -230,11 +230,9 @@ export default function Home() {
             </div>
           </div>
           <div className="border-t border-border pt-8 text-center text-sm text-muted-foreground space-y-2">
-            <p className="font-semibold text-foreground">VENOOTIC ENTERPRISES OPC PVT LTD</p>
-            <p>CIN: U90001OD2025OPC051514 &nbsp;|&nbsp; GST: 21AALCV6186G1Z3</p>
-            <p>Registered Office: Satya Vihar, Rasulghar, Bhubaneswar, Khorda, Odisha, 751010</p>
-            <p className="pt-2">&copy; 2026 Venootic Enterprises OPC Private Limited.
-MOOKALAA is a registered trademark of Venootic Enterprises OPC Private Limited.</p>
+            <p className="font-semibold text-foreground">APITxT</p>
+            <p>GSTIN: 08ABVFA4087H1ZW &nbsp;|&nbsp; Industry: Technology</p>
+            <p className="pt-2">&copy; {new Date().getFullYear()} APITxT. All rights reserved.</p>
           </div>
         </div>
       </footer>

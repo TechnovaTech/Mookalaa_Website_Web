@@ -17,7 +17,7 @@ interface LanguageContextType {
 const translations = {
   en: {
     "hero.title": "Discover Amazing Arts & Cultural Events",
-    "hero.subtitle": "Unite Through Arts - Find Jatra, Cinema, Music, Dance & More",
+    "hero.subtitle": "Unite Through Arts - Find Cinema, Music, Dance & More",
     "stats.eventsBooked": "Events Booked",
     "stats.artists": "Registered Artists",
     "stats.tickets": "Tickets Sold",
@@ -40,7 +40,7 @@ const translations = {
     "footer.refund": "Refund Policy",
     "explore": "Explore Events",
     "search.eventType": "Event Type",
-    "search.eventPlaceholder": "Music, Jatra, Cinema...",
+    "search.eventPlaceholder": "Music, Cinema, Dance...",
     "search.location": "Location",
     "search.locationPlaceholder": "City or ZIP code",
     "search.date": "Date",
@@ -94,7 +94,7 @@ const translations = {
     "terms.section1": "1. Acceptance of Terms",
     "terms.section1.text": "By accessing and using MOOKALAA, you accept and agree to be bound by the terms and provision of this agreement.",
     "terms.section2": "2. Description of Service",
-    "terms.section2.text": "MOOKALAA is a platform that connects users with arts and cultural events including Jatra, Cinema, Music, Dance, Festivals, Workshops, and Custom Orders from artists worldwide.",
+    "terms.section2.text": "MOOKALAA is a platform that connects users with arts and cultural events including Cinema, Music, Dance, Festivals, Workshops, and Custom Orders from artists worldwide.",
     "terms.section3": "3. User Accounts",
     "terms.section3.text": "To access certain features, you must create an account. You are responsible for:",
     "terms.section4": "4. Booking and Payments",
@@ -321,7 +321,7 @@ const translations = {
   },
   hi: {
     "hero.title": "अद्भुत कला और सांस्कृतिक कार्यक्रम खोजें",
-    "hero.subtitle": "कला के माध्यम से एकजुट - जात्रा, सिनेमा, संगीत, नृत्य और अधिक खोजें",
+    "hero.subtitle": "कला के माध्यम से एकजुट - सिनेमा, संगीत, नृत्य और अधिक खोजें",
     "stats.eventsBooked": "बुक किए गए कार्यक्रम",
     "stats.artists": "पंजीकृत कलाकार",
     "stats.tickets": "बेची गई टिकटें",
@@ -344,7 +344,7 @@ const translations = {
     "footer.refund": "रिफंड नीति",
     "explore": "कार्यक्रम देखें",
     "search.eventType": "कार्यक्रम प्रकार",
-    "search.eventPlaceholder": "संगीत, जात्रा, सिनेमा...",
+    "search.eventPlaceholder": "संगीत, सिनेमा, नृत्य...",
     "search.location": "स्थान",
     "search.locationPlaceholder": "शहर या पिन कोड",
     "search.date": "तारीख",
@@ -398,7 +398,7 @@ const translations = {
     "terms.section1": "1. शर्तों की स्वीकृति",
     "terms.section1.text": "MOOKALAA तक पहुंचकर और उपयोग करके, आप इस समझौते की शर्तों और प्रावधानों से बंधे रहने के लिए स्वीकार करते हैं और सहमत होते हैं।",
     "terms.section2": "2. सेवा का विवरण",
-    "terms.section2.text": "MOOKALAA एक मंच है जो उपयोगकर्ताओं को जात्रा, सिनेमा, संगीत, नृत्य, त्योहार, कार्यशालाओं और दुनिया भर के कलाकारों से कस्टम ऑर्डर सहित कला और सांस्कृतिक कार्यक्रमों से जोड़ता है।",
+    "terms.section2.text": "MOOKALAA एक मंच है जो उपयोगकर्ताओं को सिनेमा, संगीत, नृत्य, त्योहार, कार्यशालाओं और दुनिया भर के कलाकारों से कस्टम ऑर्डर सहित कला और सांस्कृतिक कार्यक्रमों से जोड़ता है।",
     "terms.section3": "3. उपयोगकर्ता खाते",
     "terms.section3.text": "कुछ सुविधाओं तक पहुंचने के लिए, आपको एक खाता बनाना होगा। आप निम्नलिखित के लिए जिम्मेदार हैं:",
     "terms.section4": "4. बुकिंग और भुगतान",
@@ -730,7 +730,7 @@ const translations = {
   },
   bn: {
     "hero.title": "অসাধারণ শিল্প ও সাংস্কৃতিক অনুষ্ঠান আবিষ্কার করুন",
-    "hero.subtitle": "শিল্পের মাধ্যমে একত্রিত হন - যাত্রা, সিনেমা, সঙ্গীত, নৃত্য এবং আরও অনেক কিছু খুঁজুন",
+    "hero.subtitle": "শিল্পের মাধ্যমে একত্রিত হন - সিনেমা, সঙ্গীত, নৃত্য এবং আরও অনেক কিছু খুঁজুন",
     "stats.eventsBooked": "বুক করা অনুষ্ঠান",
     "stats.artists": "নিবন্ধিত শিল্পী",
     "stats.tickets": "বিক্রিত টিকিট",
@@ -753,7 +753,7 @@ const translations = {
     "footer.refund": "রিফান্ড নীতি",
     "explore": "অনুষ্ঠান দেখুন",
     "search.eventType": "অনুষ্ঠানের ধরন",
-    "search.eventPlaceholder": "সঙ্গীত, যাত্রা, সিনেমা...",
+    "search.eventPlaceholder": "সঙ্গীত, সিনেমা, নৃত্য...",
     "search.location": "অবস্থান",
     "search.locationPlaceholder": "শহর বা পিন কোড",
     "search.date": "তারিখ",
@@ -972,7 +972,7 @@ const translations = {
     "terms.section1": "১. শর্তাবলীর স্বীকৃতি",
     "terms.section1.text": "MOOKALAA অ্যাক্সেস এবং ব্যবহার করে, আপনি এই চুক্তির শর্তাবলী এবং বিধানগুলির দ্বারা আবদ্ধ হতে স্বীকার করেন এবং সম্মত হন।",
     "terms.section2": "২. সেবার বিবরণ",
-    "terms.section2.text": "MOOKALAA একটি প্ল্যাটফর্ম যা ব্যবহারকারীদের যাত্রা, সিনেমা, সঙ্গীত, নৃত্য, উৎসব, কর্মশালা এবং বিশ্বব্যাপী শিল্পীদের কাস্টম অর্ডার সহ শিল্প ও সাংস্কৃতিক অনুষ্ঠানের সাথে সংযুক্ত করে।",
+    "terms.section2.text": "MOOKALAA একটি প্ল্যাটফর্ম যা ব্যবহারকারীদের সিনেমা, সঙ্গীত, নৃত্য, উৎসব, কর্মশালা এবং বিশ্বব্যাপী শিল্পীদের কাস্টম অর্ডার সহ শিল্প ও সাংস্কৃতিক অনুষ্ঠানের সাথে সংযুক্ত করে।",
     "terms.section3": "৩. ব্যবহারকারীর অ্যাকাউন্ট",
     "terms.section3.text": "নির্দিষ্ট বৈশিষ্ট্য অ্যাক্সেস করতে, আপনাকে একটি অ্যাকাউন্ট তৈরি করতে হবে। আপনি নিম্নলিখিতের জন্য দায়ী:",
     "terms.section4": "৪. বুকিং এবং পেমেন্ট",
@@ -1099,17 +1099,17 @@ const translations = {
   },
   brx: {
     "hero.title": "Discover Amazing Arts & Cultural Events",
-    "hero.subtitle": "Unite Through Arts - Find Jatra, Cinema, Music, Dance & More",
+    "hero.subtitle": "Unite Through Arts - Find Cinema, Music, Dance & More",
     "explore": "Explore Events"
   },
   doi: {
     "hero.title": "Discover Amazing Arts & Cultural Events",
-    "hero.subtitle": "Unite Through Arts - Find Jatra, Cinema, Music, Dance & More",
+    "hero.subtitle": "Unite Through Arts - Find Cinema, Music, Dance & More",
     "explore": "Explore Events"
   },
   gu: {
     "hero.title": "અદ્ભુત કલા અને સાંસ્કૃતિક કાર્યક્રમો શોધો",
-    "hero.subtitle": "કલાના માધ્યમથી એકજુટ થઆઓ - યાત્રા, સિનેમા, સંગીત, નૃત્ય અને વધુ શોધો",
+    "hero.subtitle": "કલાના માધ્યમથી એકજુટ થઆઓ - સિનેમા, સંગીત, નૃત્ય અને વધુ શોધો",
     "explore": "કાર્યક્રમો અન્વેષણ કરો"
   },
   kn: {

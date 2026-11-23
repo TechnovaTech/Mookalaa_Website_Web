@@ -15,8 +15,8 @@ export function TrendingCities({ cities }: TrendingCitiesProps) {
   return (
     <section className="py-12">
       <div className="mb-8" suppressHydrationWarning>
-        <h2 className="text-3xl font-bold mb-2">{t("trending.title")}</h2>
-        <p className="text-muted-foreground">{t("trending.subtitle")}</p>
+        <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight mb-2">{t("trending.title")}</h2>
+        <p className="text-muted-foreground text-base sm:text-lg">{t("trending.subtitle")}</p>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" suppressHydrationWarning>
         {cities.map((city) => (
@@ -31,10 +31,10 @@ export function TrendingCities({ cities }: TrendingCitiesProps) {
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" suppressHydrationWarning></div>
                 <div className="absolute bottom-0 left-0 right-0 p-4 text-white" suppressHydrationWarning>
                   <div className="flex items-center gap-2 mb-1" suppressHydrationWarning>
-                    <MapPin size={18} />
-                    <h3 className="font-bold text-lg">{city.name}</h3>
+                    <MapPin size={24} />
+                    <h3 className="font-extrabold text-2xl">{city.name}</h3>
                   </div>
-                  <p className="text-sm text-white/80">{city.eventCount} {t("trending.events")}</p>
+                  <p className="text-base text-white/80">{city.eventCount} {t("trending.events")}</p>
                 </div>
               </div>
             </Card>

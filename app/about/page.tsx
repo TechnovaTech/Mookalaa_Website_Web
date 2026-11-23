@@ -3,7 +3,7 @@ import type { Metadata } from "next"
 export const metadata: Metadata = {
   title: "About Us | Mookalaa",
   description:
-    "MOOKALAA is a cultural technology platform by Venootic Enterprises OPC Pvt. Ltd. dedicated to empowering artists and preserving cultural heritage through innovation.",
+    "MOOKALAA is a cultural technology platform by APITxT dedicated to empowering artists and preserving cultural heritage through innovation.",
 }
 
 const highlights = [
@@ -34,7 +34,7 @@ export default function AboutPage() {
           <h1 className="text-4xl sm:text-5xl font-bold">About MOOKALAA</h1>
           <p className="text-amber-500 font-semibold text-lg">Unite Through Arts</p>
           <p className="text-muted-foreground text-base sm:text-lg leading-relaxed text-left sm:text-center">
-            MOOKALAA is a cultural technology platform by Venootic Enterprises OPC Pvt. Ltd. dedicated to
+            MOOKALAA is a cultural technology platform by APITxT dedicated to
             empowering artists and preserving cultural heritage through innovation. We connect artists,
             audiences, learners, and businesses in one trusted digital ecosystem, enabling artist bookings,
             online learning, personalized wishes, event ticketing, digital promotion, and secure payments.
@@ -90,9 +90,8 @@ export default function AboutPage() {
 
         {/* Company details */}
         <section className="rounded-lg border border-border bg-card p-6 text-center space-y-2 text-sm text-muted-foreground">
-          <p className="font-semibold text-foreground text-base">VENOOTIC ENTERPRISES OPC PVT LTD</p>
-          <p>CIN: U90001OD2025OPC051514 &nbsp;|&nbsp; GST: 21AALCV6186G1Z3</p>
-          <p>Registered Office: Satya Vihar, Rasulghar, Bhubaneswar, Khorda, Odisha, 751010</p>
+          <p className="font-semibold text-foreground text-base">APITxT</p>
+          <p>GSTIN: 08ABVFA4087H1ZW &nbsp;|&nbsp; Industry: Technology</p>
         </section>
       </div>
     </main>

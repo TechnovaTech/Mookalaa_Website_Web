@@ -14,7 +14,7 @@ const _geistMono = Geist_Mono({ subsets: ["latin"] })
 export const metadata: Metadata = {
   title: "Mookalaa Website",
   description:
-    "Unite Through Arts. Discover amazing Jatra, Cinema, Music, Dance, Festivals, Workshops, and Custom Orders from artists worldwide.",
+    "Unite Through Arts. Discover amazing Cinema, Music, Dance, Festivals, Workshops, and Custom Orders from artists worldwide.",
   viewport: {
     width: "device-width",
     initialScale: 1,
