@@ -212,7 +212,7 @@ export default function Home() {
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="hover:text-foreground transition">
+                  <a href="/refund-policy" className="hover:text-foreground transition">
                     {t("footer.refund")}
                   </a>
                 </li>
