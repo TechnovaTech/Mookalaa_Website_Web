@@ -4,7 +4,7 @@ import { LegalPage, LegalSection, LegalList } from "@/components/legal"
 export const metadata: Metadata = {
   title: "Terms & Conditions | MOOKALAA",
   description:
-    "The terms governing your use of MOOKALAA, the digital platform by APITxT connecting artists, organizers and audiences.",
+    "The terms governing your use of MOOKALAA, the digital platform by Venootic Enterprises OPC Private Limited connecting artists, organizers and audiences.",
 }
 
 export default function TermsPage() {
@@ -46,7 +46,8 @@ export default function TermsPage() {
 
       <LegalSection heading="Services">
         <p>
-          MOOKALAA is a comprehensive digital platform developed by APITxT to connect artists, organizers, audiences, businesses, and cultural communities
+          MOOKALAA is a comprehensive digital platform developed by Venootic Enterprises OPC Private
+          Limited to connect artists, organizers, audiences, businesses, and cultural communities
           through technology.
         </p>
         <p>The platform offers the following services:</p>
@@ -106,7 +107,7 @@ export default function TermsPage() {
         <LegalList
           items={["Software", "Design", "Logo", "Content", "Trademarks", "Graphics"]}
         />
-        <p>are owned by APITxT.</p>
+        <p>are owned by VENOOTIC ENTERPRISES OPC PVT LTD.</p>
         <p>No content may be copied or reproduced without written permission.</p>
       </LegalSection>
 
@@ -143,7 +144,8 @@ export default function TermsPage() {
 
       <LegalSection heading="Limitation of Liability">
         <p>
-          To the maximum extent permitted by law, APITxT shall not be liable for:
+          To the maximum extent permitted by law, VENOOTIC ENTERPRISES (OPC) PVT LTD shall not be
+          liable for:
         </p>
         <LegalList
           items={[
@@ -159,7 +161,8 @@ export default function TermsPage() {
 
       <LegalSection heading="Indemnification">
         <p>
-          You agree to indemnify and hold harmless APITxT, its directors, employees, and affiliates from claims arising from your misuse of the App or
+          You agree to indemnify and hold harmless VENOOTIC ENTERPRISES (OPC) PVT LTD, its
+          directors, employees, and affiliates from claims arising from your misuse of the App or
           violation of these Terms.
         </p>
       </LegalSection>
@@ -201,13 +204,12 @@ export default function TermsPage() {
       <LegalSection heading="Company Details" highlight>
         <div className="space-y-2">
           <p>
-            <span className="font-semibold text-foreground">Company Name:</span> APITxT
+            <span className="font-semibold text-foreground">Company Name:</span> VENOOTIC
+            ENTERPRISES (OPC) PRIVATE LIMITED
           </p>
           <p>
-            <span className="font-semibold text-foreground">GSTIN:</span> 08ABVFA4087H1ZW
-          </p>
-          <p>
-            <span className="font-semibold text-foreground">Industry:</span> Technology
+            <span className="font-semibold text-foreground">Registered Office:</span> Plot No.
+            1180/6456/16042, Satyavihar, Rasulgarh, Bhubaneswar, Khordha – 751010, Odisha, India
           </p>
           <p>
             <span className="font-semibold text-foreground">Email:</span>{" "}
