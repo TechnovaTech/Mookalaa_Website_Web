@@ -1188,7 +1188,9 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   }
 
   const translateCategory = (category: string): string => {
-    return t(`categories.${category}`)
+    const key = `categories.${category}`
+    const translated = t(key)
+    return translated === key ? category : translated
   }
 
   const translateEvent = (eventId: string, field: 'title' | 'description', defaultValue: string): string => {

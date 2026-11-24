@@ -3,12 +3,11 @@
 import { useState, useMemo, useEffect } from "react"
 import { useSearchParams } from "next/navigation"
 import { EventFilters } from "@/components/event-filters"
-import { EventGrid } from "@/components/event-grid"
 import { fetchApprovedEvents } from "@/lib/api"
 import { filterEvents, sortEvents } from "@/lib/utils-events"
 import type { FilterOptions, Event } from "@/lib/types"
 import { Button } from "@/components/ui/button"
-import { LayoutGrid, Map } from "lucide-react"
+import { LayoutGrid, Map, Sparkles } from "lucide-react"
 import { useLanguage } from "@/lib/language-context"
 
 export default function EventsPage() {
@@ -65,9 +64,11 @@ export default function EventsPage() {
     <main className="min-h-screen py-8" suppressHydrationWarning>
       <div className="px-4 sm:px-6 lg:px-8 w-full" suppressHydrationWarning>
         {/* Header */}
-        <div className="mb-8" suppressHydrationWarning>
-          <h1 className="text-4xl font-bold mb-2" suppressHydrationWarning>{t("eventsPage.title")}</h1>
-          <p className="text-muted-foreground" suppressHydrationWarning>{t("eventsPage.found")} {filteredAndSorted.length} {t("eventsPage.events")}</p>
+        <div className="mb-8 flex items-center gap-4" suppressHydrationWarning>
+          <span aria-hidden className="h-10 sm:h-12 w-1.5 rounded-full bg-gradient-to-b from-amber-400 to-amber-600" />
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight bg-gradient-to-r from-amber-400 via-amber-200 to-amber-500 bg-clip-text text-transparent" suppressHydrationWarning>
+            {t("eventsPage.title")}
+          </h1>
         </div>
 
         {/* Controls */}
@@ -110,7 +111,12 @@ export default function EventsPage() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8" suppressHydrationWarning>
           {/* Sidebar Filters */}
           <div className="md:col-span-1" suppressHydrationWarning>
-            <EventFilters filters={filters} onFiltersChange={setFilters} onClear={handleClearFilters} />
+            <EventFilters
+              filters={filters}
+              onFiltersChange={setFilters}
+              onClear={handleClearFilters}
+              availableCategories={allEvents.map((event) => event.category)}
+            />
           </div>
 
           {/* Main Content */}
@@ -120,12 +126,13 @@ export default function EventsPage() {
                 <p className="text-muted-foreground">Map view coming soon</p>
               </div>
             ) : (
-              <EventGrid
-                events={filteredAndSorted}
-                hasMore={displayCount < totalFilteredEvents}
-                onLoadMore={() => setDisplayCount((prev) => prev + 12)}
-                isLoading={false}
-              />
+              // Shown in place of the event cards until events go live, as on the home page.
+              <div className="relative overflow-hidden rounded-2xl border border-amber-500/30 bg-gradient-to-br from-amber-500/15 via-card to-amber-600/15 h-64 sm:h-80 flex flex-col items-center justify-center gap-4 text-center px-6">
+                <Sparkles size={40} className="text-amber-400" aria-hidden />
+                <p className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight bg-gradient-to-r from-amber-400 via-amber-200 to-amber-500 bg-clip-text text-transparent">
+                  Coming Soon
+                </p>
+              </div>
             )}
           </div>
         </div>

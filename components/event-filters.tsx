@@ -12,9 +12,11 @@ interface EventFiltersProps {
   filters: FilterOptions
   onFiltersChange: (filters: FilterOptions) => void
   onClear: () => void
+  /** Categories of the events on the page; admin categories with no events are not offered. */
+  availableCategories?: string[]
 }
 
-export function EventFilters({ filters, onFiltersChange, onClear }: EventFiltersProps) {
+export function EventFilters({ filters, onFiltersChange, onClear, availableCategories }: EventFiltersProps) {
   const { t, translateCategory } = useLanguage()
   const [isOpen, setIsOpen] = useState(false)
   // Categories come from the admin panel, not a hardcoded list.
@@ -23,6 +25,10 @@ export function EventFilters({ filters, onFiltersChange, onClear }: EventFilters
   useEffect(() => {
     fetchCategories().then((list) => setCategories(Array.from(new Set<string>(list))))
   }, [])
+
+  const shownCategories = availableCategories
+    ? categories.filter((cat) => availableCategories.some((name) => name.toLowerCase() === cat.toLowerCase()))
+    : categories
 
   const updateFilter = <K extends keyof FilterOptions>(key: K, value: FilterOptions[K]) => {
     onFiltersChange({ ...filters, [key]: value })
@@ -46,10 +52,11 @@ export function EventFilters({ filters, onFiltersChange, onClear }: EventFilters
 
         <div className="space-y-6" suppressHydrationWarning>
           {/* Category Filter */}
+          {shownCategories.length > 0 && (
           <div suppressHydrationWarning>
             <h4 className="font-semibold text-sm mb-3">{t("filters.category")}</h4>
             <div className="flex flex-wrap gap-2" suppressHydrationWarning>
-              {categories.map((cat) => (
+              {shownCategories.map((cat) => (
                 <Badge
                   key={cat}
                   variant={filters.category === cat ? "default" : "outline"}
@@ -62,6 +69,7 @@ export function EventFilters({ filters, onFiltersChange, onClear }: EventFilters
               ))}
             </div>
           </div>
+          )}
 
           {/* Location Filter */}
           <div suppressHydrationWarning>
