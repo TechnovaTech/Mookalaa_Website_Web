@@ -6,11 +6,10 @@ import { CategorySection } from "@/components/category-section"
 import { TrendingCities } from "@/components/trending-cities"
 import { Newsletter } from "@/components/newsletter"
 import { SponsorAds } from "@/components/sponsor-ads"
-import { buildTrendingCities } from "@/lib/cities"
 import { useLanguage } from "@/lib/language-context"
 import { fetchApprovedEvents, fetchCategories } from "@/lib/api"
 import { useEffect, useState } from "react"
-import type { Event } from "@/lib/types"
+import type { Event, EventCity } from "@/lib/types"
 
 export default function Home() {
   const { t } = useLanguage()
@@ -40,8 +39,16 @@ export default function Home() {
   }, [])
 
   const translatedEvents = events
-  // Cities are derived from where approved events actually are.
-  const trendingCities = buildTrendingCities(events)
+  // While events are coming soon, Trending Cities shows Bhubaneswar, Odisha.
+  const trendingCities: EventCity[] = [
+    {
+      name: "Bhubaneswar",
+      country: "India",
+      eventCount: 0,
+      image: "/lingaraj-temple-bhubaneshwar-odisha-2-attr-hero.jpg",
+      coordinates: { lat: 20.2961, lng: 85.8245 },
+    },
+  ]
 
   return (
     <main className="min-h-screen">

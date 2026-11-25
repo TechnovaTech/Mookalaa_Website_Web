@@ -34,7 +34,9 @@ export function TrendingCities({ cities }: TrendingCitiesProps) {
                     <MapPin size={24} />
                     <h3 className="font-extrabold text-2xl">{city.name}</h3>
                   </div>
-                  <p className="text-base text-white/80">{city.eventCount} {t("trending.events")}</p>
+                  <p className="text-base text-white/80">
+                    {city.eventCount > 0 ? `${city.eventCount} ${t("trending.events")}` : "Coming soon"}
+                  </p>
                 </div>
               </div>
             </Card>
